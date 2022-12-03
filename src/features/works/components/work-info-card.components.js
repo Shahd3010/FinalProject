@@ -1,14 +1,36 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text } from "react-native";
 import { Card } from "react-native-paper";
 import styled from "styled-components/native";
+import { SvgXml } from "react-native-svg";
+import star from "../../../../assets/star";
+const WorkerCard = styled(Card)`
+  background-color: ${(props) => props.theme.colors.bg.primary};
+`;
+
+const WorkerCardCover = styled(Card.Cover)`
+  padding: ${(props) => props.theme.space[3]};
+  background-color: ${(props) => props.theme.colors.bg.primary};
+`;
+const Info = styled.View`
+  padding: ${(props) => props.theme.space[3]};
+`;
 
 const Title = styled.Text`
-  padding: 5px;
+  font-family: ${(props) => props.theme.fonts.heading};
+  font-size: ${(props) => props.theme.sizes.body};
   color: red;
-  font-family: Copperplate;
-  font-size: 15;
 `;
+const Ratting = styled.View`
+  flex-direction: row;
+  padding-top: ${(props) => props.theme.space[2]};
+  padding-bottom: ${(props) => props.theme.space[2]};
+`;
+const Address = styled.Text`
+  font-family: ${(props) => props.theme.fonts.body};
+  font-size: ${(props) => props.theme.fontSizes.caption};
+`;
+
 export const WorkinfoCard = ({ work = {} }) => {
   const {
     name = "shahd",
@@ -20,19 +42,21 @@ export const WorkinfoCard = ({ work = {} }) => {
     rating = 5,
     flag,
   } = work;
+  const ratingArray = Array.from(new Array(Math.floor(rating)));
+  console.log(ratingArray);
   return (
-    <Card elevation={5} style={styles.card}>
-      <Card.Cover key={name} style={styles.cover} source={{ uri: photos[0] }} />
-      <Title>{name}</Title>
-    </Card>
+    <WorkerCard elevation={5}>
+      <WorkerCardCover key={name} source={{ uri: photos[0] }} />
+      <Info>
+        <Title>{name}</Title>
+        <Ratting>
+          {ratingArray.map(() => (
+            <SvgXml xml={star} width={20} height={20} />
+          ))}
+        </Ratting>
+
+        <Address>{address} </Address>
+      </Info>
+    </WorkerCard>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "white",
-  },
-  cover: {
-    backgroundColor: "white",
-  },
-});
