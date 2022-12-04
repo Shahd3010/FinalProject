@@ -1,4 +1,5 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { ThemeProvider } from "react-native-paper";
 import { WorkScreen } from "./src/features/works/screens/works.screen";
 import { ThemeProvider } from "styled-components/native";
 import {
