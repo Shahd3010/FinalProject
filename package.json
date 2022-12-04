@@ -12,6 +12,7 @@
   "dependencies": {
     "@expo-google-fonts/lato": "^0.2.2",
     "@expo-google-fonts/oswald": "^0.2.2",
+    "@react-navigation/native": "^6.0.16",
     "expo": "~47.0.8",
     "expo-font": "~11.0.1",
     "expo-status-bar": "~1.4.2",

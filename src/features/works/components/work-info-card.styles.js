@@ -7,6 +7,7 @@ height:15px;
 `;
 export const WorkerCard = styled(Card)`
   background-color: ${(props) => props.theme.colors.bg.primary};
+  margin-bottom: ${(props) => props.theme.space[3]};
 `;
 
 export const WorkerCardCover = styled(Card.Cover)`
