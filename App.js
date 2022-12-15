@@ -11,6 +11,7 @@ import {
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Settings = () => (
@@ -41,7 +42,28 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <Tab.Navigator>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ color, size }) => {
+                let iconName;
+                if (route.name === "Services") {
+                  iconName = "work";
+                } else if (route.name === "Settings") {
+                  iconName = "settings";
+                } else if (route.name === "Map") {
+                  iconName = "map";
+                }
+
+                return (
+                  <MaterialIcons name={iconName} size={size} color={color} />
+                );
+              },
+            })}
+            tabBarOptions={{
+              activeTintColor: "red",
+              inactiveTintColor: "gray",
+            }}
+          >
             <Tab.Screen name="Services" component={WorkScreen} />
             <Tab.Screen name="Map" component={Map} />
             <Tab.Screen name="Settings" component={Settings} />
