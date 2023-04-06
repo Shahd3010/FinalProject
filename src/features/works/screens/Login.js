@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -13,16 +14,18 @@ import {
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../../../config/firebase";
+import HomeScreen from "./HomeScreen";
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
-export default function Login({ navigation }) {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigation = useNavigation();
   const onHandleLogin = () => {
-    if (email !== "" && password !== "") {
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => console.log("Login success"))
-        .catch((err) => Alert.alert("Login error", err.message));
+    if (email == "shahd" && password == "11") {
+      console.log("Login success");
+      navigation.navigate("HomeScreen");
+    } else {
+      Alert.alert("Login error", "Invalid email or password");
     }
   };
   return (
@@ -54,7 +57,7 @@ export default function Login({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
           <Text style={{ fontWeight: "bold", color: "#fff", fontSize: 18 }}>
             {" "}
-            Log In
+            LogIn
           </Text>
         </TouchableOpacity>
         <View
