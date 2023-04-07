@@ -16,6 +16,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import Signup from "./Signup";
 import auth from "../../../../config/firebase";
 import HomeScreen from "./HomeScreen";
+import SignUpType from "./SignUpType";
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -32,9 +33,7 @@ export default function Login() {
     // Alert.alert("Login error", "Invalid email or password");
     //}
   };
-  const onHandleSignup = () => {
-    navigation.navigate("Signup");
-  };
+
   const renderItem = ({ item }) => (
     <View style={styles.loginItem}>
       <Text style={styles.loginItemText}>Email: {item.email}</Text>
@@ -45,9 +44,10 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
+      <Text style={styles.title}>Workers Community</Text>
       <View style={styles.whiteSheet} />
+
       <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Log In</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter email"
@@ -85,7 +85,7 @@ export default function Login() {
           <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
             Don't have an account?{" "}
           </Text>
-          <TouchableOpacity onPress={onHandleSignup}>
+          <TouchableOpacity onPress={navigation.navigate("Signup")}>
             <Text style={{ color: "#f57c00", fontWeight: "600", fontSize: 14 }}>
               {" "}
               SignUp
@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   title: {
-    fontSize: 36,
+    fontSize: 25,
     fontWeight: "bold",
-    color: "orange",
+    color: "#8b4513",
     alignSelf: "center",
     paddingBottom: 24,
   },

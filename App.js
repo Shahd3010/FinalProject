@@ -13,6 +13,7 @@ import { SettingsScreen } from "./src/features/works/screens/setting.screen";
 import Login from "./src/features/works/screens/Login";
 import HomeScreen from "./src/features/works/screens/HomeScreen";
 import Signup from "./src/features/works/screens/Signup";
+import SignUpType from "./src/features/works/screens/SignUpType";
 import {
   useFonts as useOswald,
   Oswald_400Regular,
@@ -20,10 +21,11 @@ import {
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { MaterialIcons } from "@expo/vector-icons";
+import WorkerProfile from "./src/features/works/screens/WorkerProfile";
 //import auth from "./config/firebase";
 
 const Stack = createStackNavigator();
-
+const LogInStack = createStackNavigator();
 function RootNavigator() {
   return (
     <NavigationContainer>
@@ -33,6 +35,16 @@ function RootNavigator() {
 }
 
 const Tab = createBottomTabNavigator();
+function LogInStackScreen() {
+  return (
+    <LogInStack>
+      <LogInStack.Screen
+        name="HomeScreen"
+        component={SignUpType}
+      ></LogInStack.Screen>
+    </LogInStack>
+  );
+}
 
 const App = () => {
   return (
@@ -40,7 +52,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="SignUpType" component={SignUpType} />
       </Stack.Navigator>
     </NavigationContainer>
   );
