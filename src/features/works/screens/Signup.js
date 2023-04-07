@@ -1,4 +1,7 @@
-/*import React, { useState } from "react";
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -13,17 +16,32 @@ import {
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../../../config/firebase";
+import HomeScreen from "./HomeScreen";
+
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
-export default function Signup({ navigation }) {
+
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigation = useNavigation();
+  const Stack = createStackNavigator();
 
   const onHandleSignup = () => {
-    if (email !== "" && password !== "") {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log("Signup success"))
-        .catch((err) => Alert.alert("Login error", err.message));
+    if (password !== confirmPassword) {
+      Alert.alert("Signup error", "Passwords do not match");
+      return;
     }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("Signup success", userCredential.user);
+        navigation.navigate("HomeScreen");
+      })
+      .catch((error) => {
+        console.log("Signup error", error);
+        Alert.alert("Signup error", error.message);
+      });
   };
 
   return (
@@ -31,7 +49,7 @@ export default function Signup({ navigation }) {
       <Image source={backImage} style={styles.backImage} />
       <View style={styles.whiteSheet} />
       <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>Signup</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter email"
@@ -55,7 +73,7 @@ export default function Signup({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
           <Text style={{ fontWeight: "bold", color: "#fff", fontSize: 18 }}>
             {" "}
-            Sign Up
+            Signup
           </Text>
         </TouchableOpacity>
         <View
@@ -67,12 +85,12 @@ export default function Signup({ navigation }) {
           }}
         >
           <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
-            have an account?{" "}
+            Don't have an account?{" "}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <TouchableOpacity onPress={onHandleSignup}>
             <Text style={{ color: "#f57c00", fontWeight: "600", fontSize: 14 }}>
               {" "}
-              Log In
+              SignUp
             </Text>
           </TouchableOpacity>
         </View>
@@ -130,4 +148,3 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
 });
-*/

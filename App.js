@@ -12,7 +12,7 @@ import Chat from "./src/features/works/screens/Chat";
 import { SettingsScreen } from "./src/features/works/screens/setting.screen";
 import Login from "./src/features/works/screens/Login";
 import HomeScreen from "./src/features/works/screens/HomeScreen";
-//import Signup from "./src/features/works/screens/Signup";
+import Signup from "./src/features/works/screens/Signup";
 import {
   useFonts as useOswald,
   Oswald_400Regular,
@@ -40,6 +40,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -13,6 +13,7 @@ import {
   Alert,
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import Signup from "./Signup";
 import auth from "../../../../config/firebase";
 import HomeScreen from "./HomeScreen";
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
@@ -20,14 +21,27 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const [loginData, setLoginData] = useState([]);
   const onHandleLogin = () => {
-    if (email == "shahd" && password == "11") {
-      console.log("Login success");
-      navigation.navigate("HomeScreen");
-    } else {
-      Alert.alert("Login error", "Invalid email or password");
-    }
+    const newData = { email, password };
+    setLoginData([...loginData, newData]);
+    setEmail("");
+    setPassword("");
+    navigation.navigate("HomeScreen");
+    // } else {
+    // Alert.alert("Login error", "Invalid email or password");
+    //}
   };
+  const onHandleSignup = () => {
+    navigation.navigate("Signup");
+  };
+  const renderItem = ({ item }) => (
+    <View style={styles.loginItem}>
+      <Text style={styles.loginItemText}>Email: {item.email}</Text>
+      <Text style={styles.loginItemText}>Password: {item.password}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
@@ -71,10 +85,10 @@ export default function Login() {
           <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
             Don't have an account?{" "}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+          <TouchableOpacity onPress={onHandleSignup}>
             <Text style={{ color: "#f57c00", fontWeight: "600", fontSize: 14 }}>
               {" "}
-              Sign Up
+              SignUp
             </Text>
           </TouchableOpacity>
         </View>
