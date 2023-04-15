@@ -33,6 +33,9 @@ export default function Login() {
     // Alert.alert("Login error", "Invalid email or password");
     //}
   };
+  const onHandleSignUpType = () => {
+    navigation.navigate("SignUpType");
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.loginItem}>
@@ -85,7 +88,7 @@ export default function Login() {
           <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
             Don't have an account?{" "}
           </Text>
-          <TouchableOpacity onPress={navigation.navigate("Signup")}>
+          <TouchableOpacity style={styles.button} onPress={onHandleSignUpType}>
             <Text style={{ color: "#f57c00", fontWeight: "600", fontSize: 14 }}>
               {" "}
               SignUp

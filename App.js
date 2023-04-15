@@ -1,4 +1,9 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
+//import { AppRegistry } from "react-native";
+//import App from "./App";
+//import { FinalProject as appName } from "./app.config.js";
+
+//AppRegistry.registerComponent(appName, () => App);
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { WorkScreen } from "./src/features/works/screens/works.screen";
 import { ThemeProvider } from "styled-components/native";
@@ -22,10 +27,10 @@ import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import WorkerProfile from "./src/features/works/screens/WorkerProfile";
+import SignUpWorker from "./src/features/works/screens/SignUpWorker";
 //import auth from "./config/firebase";
 
 const Stack = createStackNavigator();
-const LogInStack = createStackNavigator();
 function RootNavigator() {
   return (
     <NavigationContainer>
@@ -35,27 +40,18 @@ function RootNavigator() {
 }
 
 const Tab = createBottomTabNavigator();
-function LogInStackScreen() {
-  return (
-    <LogInStack>
-      <LogInStack.Screen
-        name="HomeScreen"
-        component={SignUpType}
-      ></LogInStack.Screen>
-    </LogInStack>
-  );
-}
-
-const App = () => {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="SignUpType" component={SignUpType} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="SignUpType" component={SignUpType} />
+        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="SignUpWorker" component={SignUpWorker} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 export default App;

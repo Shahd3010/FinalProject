@@ -9,28 +9,28 @@ import {
 } from "react-native";
 import Signup from "./Signup";
 import Login from "./Login";
+import SignUpWorker from "./SignUpWorker";
 
 const backgroundImage = require("../../../../assets/BACKGROUND_WORKER.webp");
 
 export default function SignUpType() {
   const navigation = useNavigation();
-  /*
+
   const onHandleSignup = () => {
     navigation.navigate("Signup");
   };
-  /*
-  const handleWorkerSignup = () => {
-    navigation.navigate("Signup");
-  };
 
+  const handleWorkerSignup = () => {
+    navigation.navigate("SignUpWorker");
+  };
+  /*
   const handleCustomerSignup = () => {
     navigation.navigate("Signup");
   };
-
+*/
   const handleGoBack = () => {
     navigation.navigate("Login");
   };
-  */
 
   return (
     <View style={styles.container}>
@@ -44,21 +44,18 @@ export default function SignUpType() {
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           style={[styles.button, styles.workerButton]}
-          onPress={navigation.navigate("Signup")}
+          onPress={onHandleSignup}
         >
           <Text style={styles.buttonText}>Sign Up as a Worker</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.customerButton]}
-          onPress={navigation.navigate("Signup")}
+          onPress={handleWorkerSignup}
         >
           <Text style={styles.buttonText}>Sign Up as a Customer</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={navigation.navigate("Signup")}
-      >
+      <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
         <Text style={styles.backButtonText}>Back to Login</Text>
       </TouchableOpacity>
     </View>
