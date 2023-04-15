@@ -44,13 +44,13 @@ export default function SignUpType() {
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           style={[styles.button, styles.workerButton]}
-          onPress={onHandleSignup}
+          onPress={handleWorkerSignup}
         >
           <Text style={styles.buttonText}>Sign Up as a Worker</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.customerButton]}
-          onPress={handleWorkerSignup}
+          onPress={onHandleSignup}
         >
           <Text style={styles.buttonText}>Sign Up as a Customer</Text>
         </TouchableOpacity>
