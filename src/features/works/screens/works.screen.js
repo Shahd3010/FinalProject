@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+//import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { FlatList } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { WorkinfoCard } from "../components/work-info-card.components";
