@@ -14,7 +14,7 @@ export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [place, setPlace] = useState("");
-  const [choices, setChoices] = useState([]);
+  const [choices, setChoices] = useState(["construction", "Home Improvement"]);
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
@@ -45,12 +45,8 @@ export default function SignUpWorker() {
     }
   };
 
-  const handleAddChoice = (newChoice) => {
-    setChoices([...choices, newChoice]);
-  };
-
-  const handleRemoveChoice = (indexToRemove) => {
-    setChoices(choices.filter((choice, index) => index !== indexToRemove));
+  const handleChoicePress = (choice) => {
+    console.log(`You selected: ${choice}`);
   };
 
   return (
@@ -81,20 +77,13 @@ export default function SignUpWorker() {
           {choices.map((choice, index) => (
             <TouchableOpacity
               key={index}
+              onPress={() => handleChoicePress(choice)}
               style={styles.choice}
-              onPress={() => handleRemoveChoice(index)}
             >
               <Text>{choice}</Text>
             </TouchableOpacity>
           ))}
         </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Add choice"
-          value={""}
-          onChangeText={(text) => handleAddChoice(text)}
-          onSubmitEditing={() => handleAddChoice("")}
-        />
       </View>
       <TextInput
         style={styles.input}
