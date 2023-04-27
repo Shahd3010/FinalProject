@@ -19,6 +19,7 @@ import Login from "./src/features/works/screens/Login";
 import HomeScreen from "./src/features/works/screens/HomeScreen";
 import Signup from "./src/features/works/screens/Signup";
 import SignUpType from "./src/features/works/screens/SignUpType";
+import HomeScreenWorker from "./src/features/works/screens/HomeScreenWorker";
 /*import {
   useFonts as useOswald,
   Oswald_400Regular,
@@ -50,6 +51,7 @@ function App() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="SignUpWorker" component={SignUpWorker} />
+        <Stack.Screen name="HomeScreenWorker" component={HomeScreenWorker} />
       </Stack.Navigator>
     </NavigationContainer>
   );

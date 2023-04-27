@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HomeScreenWorker from "./HomeScreenWorker";
 import {
   StyleSheet,
   Text,
@@ -9,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useNavigation } from "@react-navigation/native";
 export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,14 +19,13 @@ export default function SignUpWorker() {
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigation = useNavigation();
   const handleSignUp = async () => {
     // Check if all required fields are filled
     if (!name || !email || !place || !phone || !description || !password) {
       Alert.alert("Error", "Please fill all required fields");
       return;
     }
-
     // Save user data to AsyncStorage
     const user = {
       name,
@@ -43,6 +43,7 @@ export default function SignUpWorker() {
       console.log(error);
       Alert.alert("Error", "User sign up failed");
     }
+    navigation.navigate("HomeScreenWorker");
   };
 
   const handleChoicePress = (choice) => {
@@ -113,7 +114,6 @@ export default function SignUpWorker() {
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
