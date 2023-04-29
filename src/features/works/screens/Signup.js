@@ -83,17 +83,7 @@ export default function Signup() {
             alignItems: "center",
             alignSelf: "center",
           }}
-        >
-          <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
-            Don't have an account?{" "}
-          </Text>
-          <TouchableOpacity onPress={onHandleSignup}>
-            <Text style={{ color: "#f57c00", fontWeight: "600", fontSize: 14 }}>
-              {" "}
-              SignUp
-            </Text>
-          </TouchableOpacity>
-        </View>
+        ></View>
       </SafeAreaView>
       <StatusBar barStyle="light-content" />
     </View>
