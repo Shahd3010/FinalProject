@@ -69,14 +69,13 @@ const SettingsStackScreen = () => {
   );
 };
 
-const HomeScreenWorker = () => {
+const HomeScreenWorker = ({ name }) => {
   return (
     <Tab.Navigator
       initialRouteName="Profile"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName;
-
           if (route.name === "Profile") {
             iconName = "person-circle-outline";
           } else if (route.name === "Chat") {
@@ -84,7 +83,6 @@ const HomeScreenWorker = () => {
           } else if (route.name === "Settings") {
             iconName = "settings-outline";
           }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}

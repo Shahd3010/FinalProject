@@ -85,11 +85,20 @@ export default function Login() {
             alignSelf: "center",
           }}
         >
-          <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
+          <Text style={{ color: "gray", fontWeight: "600", fontSize: 15 }}>
             Don't have an account?{" "}
           </Text>
-          <TouchableOpacity style={styles.button} onPress={onHandleSignUpType}>
-            <Text style={{ color: "#f57c00", fontWeight: "600", fontSize: 14 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#f57c00",
+              height: 50,
+              borderRadius: 60,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={onHandleSignUpType}
+          >
+            <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 18 }}>
               {" "}
               SignUp
             </Text>

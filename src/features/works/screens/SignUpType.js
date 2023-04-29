@@ -34,13 +34,21 @@ export default function SignUpType() {
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          fontSize: 26,
+          fontWeight: "bold",
+          color: "#8b4513",
+          alignSelf: "center",
+        }}
+      >
+        Create an Account
+      </Text>
       <ImageBackground
         source={backgroundImage}
         resizeMode="cover"
         style={styles.backgroundImage}
-      >
-        <Text style={styles.title}>Create an Account</Text>
-      </ImageBackground>
+      ></ImageBackground>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           style={[styles.button, styles.workerButton]}

@@ -20,6 +20,7 @@ export default function SignUpWorker() {
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const [users, setUsers] = useState([]);
   const handleSignUp = async () => {
     // Check if all required fields are filled
     if (!name || !email || !place || !phone || !description || !password) {
@@ -27,7 +28,7 @@ export default function SignUpWorker() {
       return;
     }
     // Save user data to AsyncStorage
-    const user = {
+    const newUser = {
       name,
       email,
       place,
@@ -36,6 +37,7 @@ export default function SignUpWorker() {
       description,
       password,
     };
+    setUsers([...users, newUser]);
     try {
       await AsyncStorage.setItem("user", JSON.stringify(user));
       Alert.alert("Success", "User sign up successful");
@@ -52,7 +54,6 @@ export default function SignUpWorker() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Worker Sign Up</Text>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -111,6 +112,7 @@ export default function SignUpWorker() {
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
+      <HomeScreenWorker name={name} />
     </ScrollView>
   );
 }
@@ -121,16 +123,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   title: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: "bold",
-    marginBottom: 20,
+    color: "#8b4513",
+    alignSelf: "center",
+    paddingBottom: 24,
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    backgroundColor: "#F6F7FB",
+    height: 58,
+    marginBottom: 20,
+    fontSize: 16,
+    borderRadius: 10,
+    padding: 12,
   },
   choicesContainer: {
     marginBottom: 10,
@@ -144,18 +149,19 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   choice: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#00BFFF",
     borderRadius: 5,
     padding: 5,
     marginRight: 5,
     marginBottom: 5,
   },
   button: {
-    backgroundColor: "#3498db",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#f57c00",
+    height: 58,
+    borderRadius: 10,
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 40,
   },
   buttonText: {
     color: "#fff",
