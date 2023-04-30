@@ -15,12 +15,19 @@ import { theme } from "../../../../src/infrastructure/theme";
 
 const Stack = createStackNavigator();
 import Chat from "./Chat";
-import { SettingsScreen } from "./setting.screen";
+import SettingsScreen from "./SettingsScreen";
 import Login from "./Login";
 function ChatStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Chat" component={Chat} />
+    </Stack.Navigator>
+  );
+}
+function SettingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }
@@ -49,7 +56,7 @@ function RootNavigator() {
     >
       <Tab.Screen name="Services" component={WorkScreen} />
       <Tab.Screen name="Chat" component={ChatStack} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Settings" component={SettingsStack} />
     </Tab.Navigator>
   );
 }
