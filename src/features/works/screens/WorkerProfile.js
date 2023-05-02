@@ -11,7 +11,7 @@ const WorkerProfile = () => {
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.name}>John Doe</Text>
+        <Text style={styles.name}>Jhn name</Text>
         <Text style={styles.profession}>Plumber</Text>
         <Text style={styles.location}>New York, NY</Text>
         <Text style={styles.description}>

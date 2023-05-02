@@ -3,19 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import WorkerProfileScreen from "./WorkerProfileScreen";
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
-
-const ProfileScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Profile Screen</Text>
-    </View>
-  );
-};
 
 const ChatScreen = () => {
   return (
@@ -25,7 +17,7 @@ const ChatScreen = () => {
   );
 };
 
-const SettingsScreen = () => {
+const settingsScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Settings Screen</Text>
@@ -38,7 +30,7 @@ const ProfileStackScreen = () => {
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={WorkerProfileScreen}
         options={{ headerShown: false }}
       />
     </ProfileStack.Navigator>
@@ -62,17 +54,17 @@ const SettingsStackScreen = () => {
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={settingsScreen}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>
   );
 };
 
-const HomeScreenWorker = ({ name }) => {
+const HomeScreenWorker = ({ prop }) => {
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName=" Profile"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName;

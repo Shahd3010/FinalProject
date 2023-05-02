@@ -8,9 +8,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+
 export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,14 +22,47 @@ export default function SignUpWorker() {
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
+  const [photo, setPhoto] = useState(null);
   const navigation = useNavigation();
   const [users, setUsers] = useState([]);
+  const handlePlaceChange = async (place) => {
+    const apiKey = "your-api-key-here";
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.results.length > 0) {
+        const location = data.results[0].geometry.location;
+        console.log(location.lat, location.lng);
+        // do something with location data
+      } else {
+        console.log("No results found");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleSignUp = async () => {
     // Check if all required fields are filled
     if (!name || !email || !place || !phone || !description || !password) {
       Alert.alert("Error", "Please fill all required fields");
       return;
     }
+    const handleSelectPhoto = async () => {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission denied!");
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync();
+      if (!result.cancelled) {
+        setPhoto(result.uri);
+      }
+    };
+
     // Save user data to AsyncStorage
     const newUser = {
       name,
@@ -36,6 +72,7 @@ export default function SignUpWorker() {
       phone,
       description,
       password,
+      photo,
     };
     setUsers([...users, newUser]);
     try {
@@ -51,9 +88,25 @@ export default function SignUpWorker() {
   const handleChoicePress = (choice) => {
     console.log(`You selected: ${choice}`);
   };
+  const handleSelectPhoto = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setPhoto(result.uri);
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
+      {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+      <TouchableOpacity style={styles.button} onPress={handleSelectPhoto}>
+        <Text style={styles.buttonText}>Select Photo</Text>
+      </TouchableOpacity>
+
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -71,7 +124,10 @@ export default function SignUpWorker() {
         style={styles.input}
         placeholder="Place"
         value={place}
-        onChangeText={(text) => setPlace(text)}
+        onChangeText={(text) => {
+          setPlace(text);
+          handlePlaceChange(text);
+        }}
       />
       <View style={styles.choicesContainer}>
         <Text style={styles.label}>Choices:</Text>
@@ -167,5 +223,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    photo: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+    },
   },
 });

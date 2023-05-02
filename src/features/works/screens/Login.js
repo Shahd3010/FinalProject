@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import MapView from "react-native-maps";
 import {
   StyleSheet,
   Text,

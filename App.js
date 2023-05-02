@@ -31,6 +31,7 @@ import { theme } from "./src/infrastructure/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import WorkerProfile from "./src/features/works/screens/WorkerProfile";*/
 import SignUpWorker from "./src/features/works/screens/SignUpWorker";
+import SettingsScreen from "./src/features/works/screens/SettingsScreen";
 //import auth from "./config/firebase";
 
 const Stack = createStackNavigator(); /*
@@ -47,12 +48,14 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="SignUpType" component={SignUpType} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="SignUpWorker" component={SignUpWorker} />
         <Stack.Screen name="HomeScreenWorker" component={HomeScreenWorker} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+
+        <Stack.Screen name="SignUpType" component={SignUpType} />
+        <Stack.Screen name="SignUpWorker" component={SignUpWorker} />
+
+        <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );

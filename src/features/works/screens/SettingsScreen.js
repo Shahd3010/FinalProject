@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import styled from "styled-components/native";
 import { List, Avatar } from "react-native-paper";
-import { Text } from "../../../components/typography/text.component";
-import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "react-native";
+import Spacer from "react-native-spacer";
 import { SafeArea } from "../../../components/utility/safe-area.component";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Login from "./Login";
 //import { AuthenticationContext } from "../../../services/authentication/authentication.context";
@@ -17,7 +17,7 @@ const AvatarContainer = styled.View`
 const SettingsScreen = ({ navigation }) => {
   //const { onLogout, user } = useContext(AuthenticationContext);
   return (
-    <SafeArea>
+    <SafeAreaView style={{ flex: 1 }}>
       <AvatarContainer>
         <Avatar.Icon size={180} icon="human" backgroundColor="#2182BD" />
         <Spacer position="top" size="large"></Spacer>
@@ -38,7 +38,7 @@ const SettingsScreen = ({ navigation }) => {
           onPress={Login}
         />
       </List.Section>
-    </SafeArea>
+    </SafeAreaView>
   );
 };
 export default SettingsScreen;
