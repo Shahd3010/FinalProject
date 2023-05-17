@@ -12,6 +12,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ThemeProvider } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { theme } from "../../../../src/infrastructure/theme";
+import ChatProfiles from "./ChatProfiles";
 
 const Stack = createStackNavigator();
 import Chat from "./Chat";

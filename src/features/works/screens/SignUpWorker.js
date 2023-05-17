@@ -18,7 +18,12 @@ export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [place, setPlace] = useState("");
-  const [choices, setChoices] = useState(["construction", "Home Improvement"]);
+  const [choices, setChoices] = useState([
+    "construction",
+    "Home Improvement",
+    "tilling",
+    "LandScaping",
+  ]);
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");

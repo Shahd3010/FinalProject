@@ -17,15 +17,17 @@ import { MaterialIcons } from "react-native-vector-icons";
 const initialPosts = [
   {
     id: 1,
-    imageUrl: "https://placeimg.com/640/480/animals",
+    imageUrl:
+      "https://www.kuhnflooring.com/wp-content/uploads/2016/10/porcelain-700x463.jpg",
     rating: 4,
-    text: "This is a great post!",
+    text: "This my job!",
   },
   {
     id: 2,
-    imageUrl: "https://placeimg.com/640/480/arch",
+    imageUrl:
+      "https://www.usatileandmarble.net/wp-content/uploads/2021/01/Marble_or_Tile__Which_Works_Best_for_Bathrooms_.Featured_1.png",
     rating: 5,
-    text: "Another awesome post!",
+    text: "Another awesome work!",
   },
 ];
 const profilePhoto = require("../../../../assets/profile.png");
@@ -40,7 +42,7 @@ const WorkerProfileScreen = () => {
     const newPost = {
       id: posts.length + 1,
       imageUrl: newPostImage,
-      rating: 5,
+      rating: 3,
       text: newPostDescription,
     };
     setPosts([...posts, newPost]);
@@ -68,6 +70,10 @@ const WorkerProfileScreen = () => {
       setNewPostImage(pickerResult.uri);
     }
   };
+  const handleDeletePost = (postId) => {
+    const updatedPosts = posts.filter((post) => post.id !== postId);
+    setPosts(updatedPosts);
+  };
 
   return (
     <View style={styles.container}>
@@ -76,17 +82,19 @@ const WorkerProfileScreen = () => {
           <Image
             style={[
               styles.image,
-              { alignSelf: "flex-start", flexDirection: "row", padding: 0 },
+              { alignSelf: "flex-start", flexDirection: "row", padding: 2 },
             ]}
             source={profilePhoto}
           />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>Name</Text>
-          <Text style={styles.profession}>Last Name</Text>
+          <Text style={styles.name}>Shahd</Text>
+          <Text style={styles.profession}>Alnaami</Text>
           <MaterialIcons name="place" size={64} color="#2F80ED" />
-          <Text style={styles.location}>Place</Text>
-          <Text style={styles.description}>Description about me</Text>
+          <Text style={styles.location}>Hura-Beersheva</Text>
+          <Text style={styles.description}>
+            I am a tiling specialist with 5 years of experience
+          </Text>
         </View>
       </View>
       <ScrollView style={styles.postsContainer}>
@@ -99,6 +107,9 @@ const WorkerProfileScreen = () => {
                 <Text style={styles.postRatingText}>{post.rating}</Text>
               </View>
               <Text style={styles.postText}>{post.text}</Text>
+              <TouchableOpacity onPress={() => handleDeletePost(post.id)}>
+                <Ionicons name="trash" size={24} color="black" />
+              </TouchableOpacity>
             </View>
           </View>
         ))}
@@ -206,11 +217,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   postImage: {
-    width: "100%",
+    width: "99%",
     height: 200,
     resizeMode: "cover",
     borderRadius: 8,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   postContent: {
     flexDirection: "row",

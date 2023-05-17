@@ -4,18 +4,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import WorkerProfileScreen from "./WorkerProfileScreen";
+import ChatProfiles from "./ChatProfiles";
+import SettingsScreen from "./SettingsScreen";
+import Chat from "./Chat";
+
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
-
-const ChatScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Chat Screen</Text>
-    </View>
-  );
-};
 
 const settingsScreen = () => {
   return (
@@ -42,7 +38,7 @@ const ChatStackScreen = () => {
     <ChatStack.Navigator>
       <ChatStack.Screen
         name="Chat"
-        component={ChatScreen}
+        component={Chat}
         options={{ headerShown: false }}
       />
     </ChatStack.Navigator>
@@ -54,7 +50,7 @@ const SettingsStackScreen = () => {
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="Settings"
-        component={settingsScreen}
+        component={SettingsScreen}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>

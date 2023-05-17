@@ -5,7 +5,7 @@ import { WorkinfoCard } from "../components/work-info-card.components";
 import styled from "styled-components/native";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { Ionicons } from "@expo/vector-icons";
-
+const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
 const SearchContainer = styled(ImageBackground)`
   padding: ${(props) => props.theme.space[1]};
   flex-direction: row;
