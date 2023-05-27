@@ -10,6 +10,7 @@ import {
   Alert,
   Image,
 } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -17,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [place, setPlace] = useState("");
+  const [place, setPlace] = useState(null);
   const [choices, setChoices] = useState([
     "construction",
     "Home Improvement",

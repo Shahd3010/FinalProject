@@ -28,7 +28,11 @@ function ChatStack() {
 function SettingsStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -56,8 +60,16 @@ function RootNavigator() {
       }}
     >
       <Tab.Screen name="Services" component={WorkScreen} />
-      <Tab.Screen name="Chat" component={ChatStack} />
-      <Tab.Screen name="Settings" component={SettingsStack} />
+      <Tab.Screen
+        name="Chat"
+        component={ChatStack}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsStack}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }
