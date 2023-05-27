@@ -7,19 +7,12 @@ import WorkerProfileScreen from "./WorkerProfileScreen";
 import ChatProfiles from "./ChatProfiles";
 import SettingsScreen from "./SettingsScreen";
 import Chat from "./Chat";
+import Settings from "./Settings";
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
-
-const settingsScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Settings Screen</Text>
-    </View>
-  );
-};
 
 const ProfileStackScreen = () => {
   return (
@@ -50,7 +43,7 @@ const SettingsStackScreen = () => {
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={Settings}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>

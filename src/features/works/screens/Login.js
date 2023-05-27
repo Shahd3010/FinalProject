@@ -13,9 +13,9 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
+
 import Signup from "./Signup";
-import auth from "../../../../config/firebase";
+
 import HomeScreen from "./HomeScreen";
 import SignUpType from "./SignUpType";
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");

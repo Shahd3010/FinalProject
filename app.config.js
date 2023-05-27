@@ -18,9 +18,12 @@ export default {
     },
     assetBundlePatterns: ["**/*"],
     ios: {
+      googleServicesFile: "./GoogleService-Info.plist",
       supportsTablet: true,
     },
     android: {
+      googleServicesFile: "./google-services.json",
+      package: "com.shahd.workers_community",
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
   Image,
   SafeAreaView,
@@ -14,34 +11,31 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import auth from "../../../../config/firebase";
+import auth from "@react-native-firebase/auth";
 import HomeScreen from "./HomeScreen";
 
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const navigation = useNavigation();
-  const Stack = createStackNavigator();
 
-  const onHandleSignup = () => {
-    if (password !== confirmPassword) {
-      Alert.alert("Signup error", "Passwords do not match");
-      return;
-    }
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log("Signup success", userCredential.user);
-        navigation.navigate("HomeScreen");
-      })
-      .catch((error) => {
+  const register = async () => {
+    if (email && password) {
+      try {
+        const response = await auth().createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        if (response.user) {
+          navigation.navigate("HomeScreen");
+        }
+      } catch (error) {
         console.log("Signup error", error);
         Alert.alert("Signup error", error.message);
-      });
+      }
+    }
   };
 
   return (
@@ -70,20 +64,11 @@ export default function Signup() {
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
+        <TouchableOpacity style={styles.button} onPress={register}>
           <Text style={{ fontWeight: "bold", color: "#fff", fontSize: 18 }}>
-            {" "}
             Signup
           </Text>
         </TouchableOpacity>
-        <View
-          style={{
-            marginTop: 20,
-            flexDirection: "row",
-            alignItems: "center",
-            alignSelf: "center",
-          }}
-        ></View>
       </SafeAreaView>
       <StatusBar barStyle="light-content" />
     </View>

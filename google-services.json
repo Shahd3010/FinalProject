@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "972049925821",
+    "project_id": "workers-community-cc5de",
+    "storage_bucket": "workers-community-cc5de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972049925821:android:78fd2f89e3d6b51a5999d4",
+        "android_client_info": {
+          "package_name": "com.shahd.workers_community"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972049925821-pdu4ifme459prm7qbg1rqip4l1ld7nbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGY0Cs2E5MsnE2befwJVVxbY6xjkaC1lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972049925821-pdu4ifme459prm7qbg1rqip4l1ld7nbo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "972049925821-4puf1chbs7s8fj5kb2544luqt3c4r1na.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shahd.workers-community"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

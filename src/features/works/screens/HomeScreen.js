@@ -16,7 +16,7 @@ import ChatProfiles from "./ChatProfiles";
 
 const Stack = createStackNavigator();
 import Chat from "./Chat";
-import SettingsScreen from "./SettingsScreen";
+import Settings from "./Settings";
 import Login from "./Login";
 function ChatStack() {
   return (
@@ -28,7 +28,7 @@ function ChatStack() {
 function SettingsStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
 }
