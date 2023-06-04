@@ -11,6 +11,7 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import HomeScreen from "./HomeScreen";
 
@@ -20,11 +21,13 @@ export default function Signup() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigation = useNavigation();
+  const auth = getAuth();
 
   const register = async () => {
     if (email && password) {
       try {
-        const response = await auth().createUserWithEmailAndPassword(
+        const response = await createUserWithEmailAndPassword(
+          auth,
           email,
           password
         );

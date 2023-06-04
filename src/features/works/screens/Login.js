@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import MapView from "react-native-maps";
+
 import {
   StyleSheet,
   Text,
@@ -13,27 +13,30 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-
 import Signup from "./Signup";
-
 import HomeScreen from "./HomeScreen";
 import SignUpType from "./SignUpType";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [loginData, setLoginData] = useState([]);
-  const onHandleLogin = () => {
-    const newData = { email, password };
-    setLoginData([...loginData, newData]);
-    setEmail("");
-    setPassword("");
-    navigation.navigate("HomeScreen");
-    // } else {
-    // Alert.alert("Login error", "Invalid email or password");
-    //}
+  const auth = getAuth();
+
+  const onHandleLogin = async () => {
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      if (response.user) {
+        navigation.navigate("HomeScreen");
+      }
+    } catch (error) {
+      console.log("Login error", error);
+      Alert.alert("Login error", error.message);
+    }
   };
+
   const onHandleSignUpType = () => {
     navigation.navigate("SignUpType");
   };
