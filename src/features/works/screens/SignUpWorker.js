@@ -10,7 +10,9 @@ import {
   Alert,
   Image,
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -56,39 +58,41 @@ export default function SignUpWorker() {
       Alert.alert("Error", "Please fill all required fields");
       return;
     }
-    const handleSelectPhoto = async () => {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("Permission denied!");
-        return;
-      }
-      const result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.cancelled) {
-        setPhoto(result.uri);
-      }
-    };
-
-    // Save user data to AsyncStorage
-    const newUser = {
-      name,
-      email,
-      place,
-      choices,
-      phone,
-      description,
-      password,
-      photo,
-    };
-    setUsers([...users, newUser]);
+    const auth = getAuth();
+    // Create a new user account using Firebase authentication
     try {
-      await AsyncStorage.setItem("user", JSON.stringify(user));
-      Alert.alert("Success", "User sign up successful");
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = response.user;
+      const firestore = getFirestore();
+      if (user) {
+        // Save additional user data to Firestore or Realtime Database
+        const newUser = {
+          name,
+          email,
+          place,
+          choices,
+          phone,
+          description,
+          photo,
+        };
+        const userRef = collection(firestore, "users");
+        await addDoc(userRef, newUser);
+
+        // Save user data to AsyncStorage
+        setUsers([...users, newUser]);
+        await AsyncStorage.setItem("user", JSON.stringify(newUser));
+
+        Alert.alert("Success", "User sign up successful");
+        navigation.navigate("HomeScreenWorker");
+      }
     } catch (error) {
-      console.log(error);
+      console.log("SignUpWorker error", error);
       Alert.alert("Error", "User sign up failed");
     }
-    navigation.navigate("HomeScreenWorker");
   };
 
   const handleChoicePress = (choice) => {

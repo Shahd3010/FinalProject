@@ -13,6 +13,8 @@ import { ThemeProvider } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { theme } from "../../../../src/infrastructure/theme";
 import ChatProfiles from "./ChatProfiles";
+import { WorkScreen } from "./works.screen";
+import { PostsScreen } from "./PostsScreen";
 
 const Stack = createStackNavigator();
 import Chat from "./Chat";
@@ -75,7 +77,6 @@ function RootNavigator() {
 }
 
 const Tab = createBottomTabNavigator();
-import { WorkScreen } from "./works.screen";
 
 export default function HomeScreen() {
   const [oswaldLoaded] = useOswald({

@@ -28,21 +28,21 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen
           name="SignUpWorker"
           component={SignUpWorker}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Login" component={Login} />
+
         <Stack.Screen name="SignUp" component={Signup} />
         <Stack.Screen
           name="HomeScreenWorker"
           component={HomeScreenWorker}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
           options={{ headerShown: false }}
         />
 

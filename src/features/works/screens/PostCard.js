@@ -2,19 +2,12 @@ import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Text } from "../../../components/typography/text.component";
 import { SvgXml } from "react-native-svg";
-import star from "../../../../assets/star";
+import star from "../../../../assets/star.svg";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const PostCard = ({
-  publisher,
-  photo,
-  description,
-  rating,
-  comments,
-  place,
-}) => {
+const PostCard = ({ photo, description, rating, comments, place }) => {
   const renderRating = () => {
-    const ratingArray = Array.from(new Array(Math.floor(rating)));
+    const ratingArray = Array.from({ length: Math.round(rating) });
     return ratingArray.map((_, index) => (
       <SvgXml key={index} xml={star} width={20} height={20} />
     ));
@@ -22,13 +15,6 @@ const PostCard = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.publisherContainer}>
-        <Image
-          source={{ uri: publisher.profilePhoto }}
-          style={styles.profilePhoto}
-        />
-        <Text>{publisher.name}</Text>
-      </View>
       <Image source={{ uri: photo }} style={styles.photo} />
       <Text>{description}</Text>
       <View style={styles.ratingContainer}>
@@ -52,7 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  profilePhoto: {
+  profilephoto: {
     width: 30,
     height: 30,
     marginRight: 10,
