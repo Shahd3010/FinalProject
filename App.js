@@ -14,6 +14,7 @@ import HomeScreenWorker from "./src/features/works/screens/HomeScreenWorker";
 import SettingsScreen from "./src/features/works/screens/SettingsScreen";
 import PostCard from "./src/features/works/screens/PostCard";
 import PostsScreen from "./src/features/works/screens/PostsScreen";
+import ProfileShow from "./src/features/works/screens/ProfileShow.js";
 /*
 
 import { theme } from "./src/infrastructure/theme";
@@ -27,19 +28,12 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen
-          name="SignUpWorker"
-          component={SignUpWorker}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen name="SignUp" component={Signup} />
         <Stack.Screen
           name="HomeScreenWorker"
           component={HomeScreenWorker}
@@ -47,6 +41,12 @@ function App() {
         />
 
         <Stack.Screen name="SignUpType" component={SignUpType} />
+        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen
+          name="SignUpWorker"
+          component={SignUpWorker}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

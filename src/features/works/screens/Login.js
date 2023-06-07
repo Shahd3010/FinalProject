@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import {
   StyleSheet,
   Text,
@@ -29,7 +35,25 @@ export default function Login() {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       if (response.user) {
-        navigation.navigate("HomeScreen");
+        const user = response.user;
+
+        // Retrieve the user data from Firestore
+        const firestore = getFirestore();
+        const userRef = collection(firestore, "users");
+        const querySnapshot = await getDocs(
+          query(userRef, where("email", "==", user.email))
+        );
+
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          if (userData.type === "worker") {
+            console.log("User is a worker");
+            navigation.navigate("HomeScreenWorker");
+          }
+        } else {
+          console.log("User is not a worker");
+          navigation.navigate("HomeScreen");
+        }
       }
     } catch (error) {
       console.log("Login error", error);

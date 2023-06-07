@@ -39,6 +39,10 @@ export default function Signup() {
         Alert.alert("Signup error", error.message);
       }
     }
+    if (!email || !password) {
+      Alert.alert("Please fill all required fields");
+      return;
+    }
   };
 
   return (

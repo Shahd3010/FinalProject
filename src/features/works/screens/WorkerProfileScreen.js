@@ -32,7 +32,8 @@ const initialPosts = [
 ];
 const profilePhoto = require("../../../../assets/profile.png");
 
-const WorkerProfileScreen = () => {
+const WorkerProfileScreen = ({ user }) => {
+  const { name, email, place, choices, phone, description, photo } = user;
   const [posts, setPosts] = useState(initialPosts);
   const [modalVisible, setModalVisible] = useState(false);
   const [newPostImage, setNewPostImage] = useState(null);
@@ -88,7 +89,7 @@ const WorkerProfileScreen = () => {
           />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>Shahd</Text>
+          <Text style={styles.name}>shahd</Text>
           <Text style={styles.profession}>Alnaami</Text>
           <MaterialIcons name="place" size={64} color="#2F80ED" />
           <Text style={styles.location}>Hura-Beersheva</Text>

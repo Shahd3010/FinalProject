@@ -78,6 +78,7 @@ export default function SignUpWorker() {
           phone,
           description,
           photo,
+          type: "worker",
         };
         const userRef = collection(firestore, "users");
         await addDoc(userRef, newUser);
@@ -178,7 +179,7 @@ export default function SignUpWorker() {
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <HomeScreenWorker name={name} />
+      <HomeScreenWorker />
     </ScrollView>
   );
 }

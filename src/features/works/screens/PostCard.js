@@ -5,7 +5,7 @@ import { SvgXml } from "react-native-svg";
 import star from "../../../../assets/star.svg";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const PostCard = ({ photo, description, rating, comments, place }) => {
+const PostCard = ({ name, photo, description, rating, comments, place }) => {
   const renderRating = () => {
     const ratingArray = Array.from({ length: Math.round(rating) });
     return ratingArray.map((_, index) => (

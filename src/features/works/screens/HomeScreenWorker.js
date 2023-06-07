@@ -15,15 +15,13 @@ const ChatStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
 const ProfileStackScreen = () => {
-  return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        component={WorkerProfileScreen}
-        options={{ headerShown: false }}
-      />
-    </ProfileStack.Navigator>
-  );
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen
+      name="Profile"
+      component={WorkerProfileScreen}
+      options={{ headerShown: false }}
+    />
+  </ProfileStack.Navigator>;
 };
 
 const ChatStackScreen = () => {
@@ -50,7 +48,7 @@ const SettingsStackScreen = () => {
   );
 };
 
-const HomeScreenWorker = ({ prop }) => {
+const HomeScreenWorker = ({ route }) => {
   return (
     <Tab.Navigator
       initialRouteName=" Profile"
