@@ -8,7 +8,15 @@ import ChatProfiles from "./ChatProfiles";
 import SettingsScreen from "./SettingsScreen";
 import Chat from "./Chat";
 import Settings from "./Settings";
-
+import { useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  getFirestore,
+} from "firebase/firestore";
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const ChatStack = createStackNavigator();
@@ -48,7 +56,38 @@ const SettingsStackScreen = () => {
   );
 };
 
-const HomeScreenWorker = ({ route }) => {
+const HomeScreenWorker = () => {
+  const route = useRoute();
+  const userId = route.params.userId;
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    console.log("User ID:", userId); // Check the user ID value
+
+    const fetchUserName = async () => {
+      try {
+        const firestore = getFirestore();
+        const userRef = collection(firestore, "users");
+        const querySnapshot = await getDocs(
+          query(userRef, where("userId", "==", userId))
+        );
+
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          const name = userData.name; // Assuming the user's name field is named "name"
+          console.log("User Name:", name); // Check the fetched user name
+          setUserName(name);
+        }
+      } catch (error) {
+        console.log("Fetch user name error", error);
+      }
+    };
+
+    if (userId) {
+      fetchUserName();
+    }
+  }, [userId]);
+
   return (
     <Tab.Navigator
       initialRouteName=" Profile"
@@ -70,7 +109,14 @@ const HomeScreenWorker = ({ route }) => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Profile" component={ProfileStackScreen} />
+      <Tab.Screen name="Profile">
+        {() => (
+          <View style={styles.container}>
+            <Text style={styles.text}>Hello {userName}</Text>
+            <ProfileStackScreen />
+          </View>
+        )}
+      </Tab.Screen>
       <Tab.Screen name="Chat" component={ChatStackScreen} />
       <Tab.Screen name="Settings" component={SettingsStackScreen} />
     </Tab.Navigator>

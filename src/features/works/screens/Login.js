@@ -22,7 +22,12 @@ import {
 import Signup from "./Signup";
 import HomeScreen from "./HomeScreen";
 import SignUpType from "./SignUpType";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
+
 const backImage = require("../../../../assets/BACKGROUND_WORKER.webp");
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -48,7 +53,7 @@ export default function Login() {
           const userData = querySnapshot.docs[0].data();
           if (userData.type === "worker") {
             console.log("User is a worker");
-            navigation.navigate("HomeScreenWorker");
+            navigation.navigate("HomeScreenWorker", { userId: user.uid });
           }
         } else {
           console.log("User is not a worker");
@@ -59,6 +64,28 @@ export default function Login() {
       console.log("Login error", error);
       Alert.alert("Login error", error.message);
     }
+  };
+  const onForgotPassword = () => {
+    // Perform any necessary validations before sending the password reset email
+    if (!email) {
+      Alert.alert(
+        "Email Required",
+        "Please enter your email to reset your password."
+      );
+      return;
+    }
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        Alert.alert(
+          "Password Reset Email Sent",
+          "Please check your email to reset your password."
+        );
+      })
+      .catch((error) => {
+        console.log("Forgot Password error", error);
+        Alert.alert("Forgot Password error", error.message);
+      });
   };
 
   const onHandleSignUpType = () => {
@@ -132,6 +159,9 @@ export default function Login() {
             </Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity onPress={onForgotPassword}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
       </SafeAreaView>
       <StatusBar barStyle="light-content" />
     </View>
@@ -176,6 +206,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 30,
+  },
+  forgotPasswordText: {
+    color: "#8b4513",
+    fontSize: 16,
+    alignSelf: "flex-end",
+    marginTop: 10,
   },
   button: {
     backgroundColor: "#f57c00",

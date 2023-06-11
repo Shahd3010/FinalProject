@@ -6,6 +6,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyBmkM06LCiUa5r7N6AqfXAXFPZzoESEATA",
   authDomain: "workers-community-cc5de.firebaseapp.com",
@@ -19,3 +20,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+export function listenToAuthState(callback) {
+  onAuthStateChanged(auth, (user) => {
+    callback(user ? user.uid : null);
+  });
+}

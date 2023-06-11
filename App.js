@@ -20,11 +20,24 @@ import ProfileShow from "./src/features/works/screens/ProfileShow.js";
 import { theme } from "./src/infrastructure/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import WorkerProfile from "./src/features/works/screens/WorkerProfile";*/
+import { useEffect, useState } from "react";
 import SignUpWorker from "./src/features/works/screens/SignUpWorker";
 import Settings from "./src/features/works/screens/Settings";
+import { listenToAuthState } from "./firebaseConfig.js";
 const Stack = createStackNavigator();
 
 function App() {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = listenToAuthState((userId) => {
+      setUserId(userId);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator>
