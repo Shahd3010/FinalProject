@@ -11,9 +11,20 @@ import {
   Button,
   Platform,
 } from "react-native";
+import firebase from "firebase/app";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "react-native-vector-icons";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { ref } from "firebase/storage";
+
 const initialPosts = [
   {
     id: 1,
@@ -39,17 +50,39 @@ const WorkerProfileScreen = ({ user }) => {
   const [newPostImage, setNewPostImage] = useState(null);
   const [newPostDescription, setNewPostDescription] = useState("");
 
-  const handleAddPost = () => {
+  const handleAddPost = async () => {
+    // Create the new post object
     const newPost = {
       id: posts.length + 1,
+      publisherId: user && user.id, // Check if user exists and has an ID
       imageUrl: newPostImage,
       rating: 3,
       text: newPostDescription,
     };
-    setPosts([...posts, newPost]);
-    setModalVisible(false);
-    setNewPostImage(null);
-    setNewPostDescription("");
+
+    try {
+      // Get the Firestore instance
+      const firestore = getFirestore();
+
+      // Get the "posts" collection reference
+      const postsCollection = collection(firestore, "posts");
+
+      // Add the new post to Firestore
+      const docRef = await addDoc(postsCollection, newPost);
+
+      // Update the new post object with the generated post ID
+      newPost.id = docRef.id;
+
+      // Update the posts state with the new post
+      setPosts([...posts, newPost]);
+
+      // Clear the form and close the modal
+      setModalVisible(false);
+      setNewPostImage(null);
+      setNewPostDescription("");
+    } catch (error) {
+      console.log("Error adding post:", error);
+    }
   };
 
   const handleChoosePhoto = async () => {
@@ -68,12 +101,26 @@ const WorkerProfileScreen = ({ user }) => {
     });
 
     if (!pickerResult.cancelled) {
-      setNewPostImage(pickerResult.uri);
+      // Instead of using "uri", access the selected asset from the "assets" array
+      setNewPostImage(pickerResult.assets[0].uri);
     }
   };
-  const handleDeletePost = (postId) => {
-    const updatedPosts = posts.filter((post) => post.id !== postId);
-    setPosts(updatedPosts);
+
+  const handleDeletePost = async (postId) => {
+    try {
+      const firestore = getFirestore();
+      const postRef = doc(firestore, "posts", postId.toString());
+      console.log("Deleting post:", postId);
+
+      // Delete the post document from Firestore
+      await deleteDoc(postRef);
+      console.log("Post deleted from Firestore");
+      // Update the posts state by removing the deleted post
+      const updatedPosts = posts.filter((post) => post.id !== postId);
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.log("Error deleting post:", error);
+    }
   };
 
   return (

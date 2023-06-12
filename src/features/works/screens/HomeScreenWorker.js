@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import WorkerProfileScreen from "./WorkerProfileScreen";
-import ChatProfiles from "./ChatProfiles";
-import SettingsScreen from "./SettingsScreen";
 import Chat from "./Chat";
 import Settings from "./Settings";
 import { useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
 import {
   collection,
   getDocs,
@@ -17,19 +14,24 @@ import {
   where,
   getFirestore,
 } from "firebase/firestore";
+
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
-const ProfileStackScreen = () => {
-  <ProfileStack.Navigator>
-    <ProfileStack.Screen
-      name="Profile"
-      component={WorkerProfileScreen}
-      options={{ headerShown: false }}
-    />
-  </ProfileStack.Navigator>;
+const ProfileStackScreen = ({ route }) => {
+  const userId = route.params.userId;
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="Profile"
+        component={WorkerProfileScreen}
+        initialParams={{ userId }}
+        options={{ headerShown: false }}
+      />
+    </ProfileStack.Navigator>
+  );
 };
 
 const ChatStackScreen = () => {
@@ -58,12 +60,10 @@ const SettingsStackScreen = () => {
 
 const HomeScreenWorker = () => {
   const route = useRoute();
-  const userId = route.params.userId;
+  const userId = route.params?.userId;
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    console.log("User ID:", userId); // Check the user ID value
-
     const fetchUserName = async () => {
       try {
         const firestore = getFirestore();
@@ -90,7 +90,7 @@ const HomeScreenWorker = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName=" Profile"
+      initialRouteName="Profile"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName;
@@ -109,14 +109,7 @@ const HomeScreenWorker = () => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Profile">
-        {() => (
-          <View style={styles.container}>
-            <Text style={styles.text}>Hello {userName}</Text>
-            <ProfileStackScreen />
-          </View>
-        )}
-      </Tab.Screen>
+      <Tab.Screen name="Profile" component={ProfileStackScreen} />
       <Tab.Screen name="Chat" component={ChatStackScreen} />
       <Tab.Screen name="Settings" component={SettingsStackScreen} />
     </Tab.Navigator>

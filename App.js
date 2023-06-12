@@ -15,6 +15,8 @@ import SettingsScreen from "./src/features/works/screens/SettingsScreen";
 import PostCard from "./src/features/works/screens/PostCard";
 import PostsScreen from "./src/features/works/screens/PostsScreen";
 import ProfileShow from "./src/features/works/screens/ProfileShow.js";
+import WorkerProfileScreen from "./src/features/works/screens/WorkerProfileScreen.js";
+import ScreenPosts from "./src/features/works/screens/ScreenPosts.js";
 /*
 
 import { theme } from "./src/infrastructure/theme";
@@ -38,15 +40,27 @@ function App() {
       unsubscribe();
     };
   }, []);
+  const userObject = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    place: "Some Place",
+    choices: [],
+    phone: "1234567890",
+    description: "Some description",
+    photo: "https://example.com/profile.jpg",
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SS" component={ScreenPosts} />
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen
           name="HomeScreenWorker"
           component={HomeScreenWorker}
