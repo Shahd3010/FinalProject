@@ -102,10 +102,11 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
-      <Text style={styles.title}>Workers Community</Text>
+
       <View style={styles.whiteSheet} />
 
       <SafeAreaView style={styles.form}>
+        <Text style={styles.title}>Workers Community</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter email"
@@ -173,11 +174,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   title: {
-    fontSize: 25,
+    fontSize: 36,
     fontWeight: "bold",
     color: "#8b4513",
     alignSelf: "center",
-    paddingBottom: 24,
+    paddingBottom: 35,
   },
   input: {
     backgroundColor: "#F6F7FB",

@@ -12,9 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import Chat from "./Chat";
 
 const PostCard = ({ post }) => {
-  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-
+  const navigation = useNavigation();
   const handleChatPress = () => {
     navigation.navigate("Chat");
   };
@@ -39,8 +38,8 @@ const PostCard = ({ post }) => {
         )}
       </TouchableOpacity>
       <View style={styles.content}>
-        <Text style={styles.name}>{post.name}</Text>
-        <Text style={styles.description}>{post.description}</Text>
+        <Text style={styles.name}>{post.id}</Text>
+        <Text style={styles.description}>{post.text}</Text>
         <TouchableOpacity
           style={styles.messageButton}
           onPress={handleChatPress}
@@ -92,15 +91,18 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   name: {
-    fontSize: 18,
+    fontSize: 50,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#333",
+    color: "#666",
+    textAlign: "center",
   },
   description: {
     fontSize: 14,
     color: "#666",
     marginBottom: 8,
+    backgroundColor: "#f57c00",
+    textAlign: "center",
   },
   messageButton: {
     backgroundColor: "#f57c00",

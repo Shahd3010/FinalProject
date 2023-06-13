@@ -15,6 +15,7 @@ import { theme } from "../../../../src/infrastructure/theme";
 import ChatProfiles from "./ChatProfiles";
 import { WorkScreen } from "./works.screen";
 import { PostsScreen } from "./PostsScreen";
+import ScreenPosts from "./ScreenPosts";
 
 const Stack = createStackNavigator();
 import Chat from "./Chat";
@@ -61,7 +62,7 @@ function RootNavigator() {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Services" component={WorkScreen} />
+      <Tab.Screen name="Services" component={ScreenPosts} />
       <Tab.Screen
         name="Chat"
         component={ChatStack}
