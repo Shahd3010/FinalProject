@@ -53,7 +53,7 @@ export default function Login() {
           const userData = querySnapshot.docs[0].data();
           if (userData.type === "worker") {
             console.log("User is a worker");
-            navigation.navigate("HomeScreenWorker", { userId: user.uid });
+            navigation.navigate("HomeScreenWorker", { user: response.user });
           }
         } else {
           console.log("User is not a worker");

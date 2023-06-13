@@ -14,20 +14,19 @@ import {
   where,
   getFirestore,
 } from "firebase/firestore";
-
+import Worker2 from "./work2";
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
-const ProfileStackScreen = ({ route }) => {
-  const userId = route.params.userId;
+const ProfileStackScreen = ({ user }) => {
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="Profile"
-        component={WorkerProfileScreen}
-        initialParams={{ userId }}
+        component={Worker2}
+        initialParams={{ user: user }}
         options={{ headerShown: false }}
       />
     </ProfileStack.Navigator>
@@ -58,9 +57,11 @@ const SettingsStackScreen = () => {
   );
 };
 
-const HomeScreenWorker = () => {
-  const route = useRoute();
-  const userId = route.params?.userId;
+const HomeScreenWorker = ({ route }) => {
+  const { user } = route.params;
+  console.log("User:", user);
+  const userId = user.uid;
+  const email = user.email;
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -69,13 +70,13 @@ const HomeScreenWorker = () => {
         const firestore = getFirestore();
         const userRef = collection(firestore, "users");
         const querySnapshot = await getDocs(
-          query(userRef, where("userId", "==", userId))
+          query(userRef, where("email", "==", email))
         );
 
         if (!querySnapshot.empty) {
           const userData = querySnapshot.docs[0].data();
-          const name = userData.name; // Assuming the user's name field is named "name"
-          console.log("User Name:", name); // Check the fetched user name
+          const name = userData.Type; // Assuming the user's name field is named "name"
+
           setUserName(name);
         }
       } catch (error) {
@@ -109,7 +110,8 @@ const HomeScreenWorker = () => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Profile" component={ProfileStackScreen} />
+      <Tab.Screen name="Profile" component={Worker2} initialParams={{ user }} />
+
       <Tab.Screen name="Chat" component={ChatStackScreen} />
       <Tab.Screen name="Settings" component={SettingsStackScreen} />
     </Tab.Navigator>

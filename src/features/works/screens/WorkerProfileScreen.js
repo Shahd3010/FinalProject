@@ -25,27 +25,10 @@ import {
 } from "firebase/firestore";
 import { ref } from "firebase/storage";
 
-const initialPosts = [
-  {
-    id: 1,
-    imageUrl:
-      "https://www.kuhnflooring.com/wp-content/uploads/2016/10/porcelain-700x463.jpg",
-    rating: 4,
-    text: "This my job!",
-  },
-  {
-    id: 2,
-    imageUrl:
-      "https://www.usatileandmarble.net/wp-content/uploads/2021/01/Marble_or_Tile__Which_Works_Best_for_Bathrooms_.Featured_1.png",
-    rating: 5,
-    text: "Another awesome work!",
-  },
-];
-const profilePhoto = require("../../../../assets/profile.png");
-
-const WorkerProfileScreen = ({ user }) => {
-  const { name, email, place, choices, phone, description, photo } = user;
-  const [posts, setPosts] = useState(initialPosts);
+const WorkerProfileScreen = ({ route }) => {
+  //const { name, email, place, choices, phone, description, photo } = user;
+  const userId = user.uid;
+  const [posts, setPosts] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [newPostImage, setNewPostImage] = useState(null);
   const [newPostDescription, setNewPostDescription] = useState("");
@@ -63,10 +46,8 @@ const WorkerProfileScreen = ({ user }) => {
     try {
       // Get the Firestore instance
       const firestore = getFirestore();
-
       // Get the "posts" collection reference
       const postsCollection = collection(firestore, "posts");
-
       // Add the new post to Firestore
       const docRef = await addDoc(postsCollection, newPost);
 
@@ -132,7 +113,6 @@ const WorkerProfileScreen = ({ user }) => {
               styles.image,
               { alignSelf: "flex-start", flexDirection: "row", padding: 2 },
             ]}
-            source={profilePhoto}
           />
         </View>
         <View style={styles.infoContainer}>
