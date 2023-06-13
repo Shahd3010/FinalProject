@@ -88,7 +88,7 @@ export default function SignUpWorker() {
         await AsyncStorage.setItem("user", JSON.stringify(newUser));
 
         Alert.alert("Success", "User sign up successful");
-        navigation.navigate("HomeScreenWorker");
+        navigation.navigate("HomeScreenWorker", { user: response.user });
       }
     } catch (error) {
       console.log("SignUpWorker error", error);

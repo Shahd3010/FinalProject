@@ -45,12 +45,13 @@ const ChatStackScreen = () => {
   );
 };
 
-const SettingsStackScreen = () => {
+const SettingsStackScreen = ({ user }) => {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="Settings"
         component={Settings}
+        initialParams={{ user: user }}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>
@@ -113,7 +114,11 @@ const HomeScreenWorker = ({ route }) => {
       <Tab.Screen name="Profile" component={Worker2} initialParams={{ user }} />
 
       <Tab.Screen name="Chat" component={ChatStackScreen} />
-      <Tab.Screen name="Settings" component={SettingsStackScreen} />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsStackScreen}
+        initialParams={{ user }}
+      />
     </Tab.Navigator>
   );
 };
