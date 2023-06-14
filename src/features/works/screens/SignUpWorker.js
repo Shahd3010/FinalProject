@@ -21,12 +21,7 @@ export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [place, setPlace] = useState(null);
-  const [choices, setChoices] = useState([
-    "construction",
-    "Home Improvement",
-    "tilling",
-    "LandScaping",
-  ]);
+  const [choices, setChoices] = useState(["בנייה", "שיפוצים", "שטיחים", "נוף"]);
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
@@ -179,7 +174,6 @@ export default function SignUpWorker() {
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <HomeScreenWorker />
     </ScrollView>
   );
 }
@@ -216,7 +210,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   choice: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "#f57c00",
     borderRadius: 5,
     padding: 5,
     marginRight: 5,
