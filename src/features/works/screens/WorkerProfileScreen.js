@@ -106,25 +106,6 @@ const WorkerProfileScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileContainer}>
-        <View style={[styles.imageContainer]}>
-          <Image
-            style={[
-              styles.image,
-              { alignSelf: "flex-start", flexDirection: "row", padding: 2 },
-            ]}
-          />
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.name}>shahd</Text>
-          <Text style={styles.profession}>Alnaami</Text>
-          <MaterialIcons name="place" size={64} color="#2F80ED" />
-          <Text style={styles.location}>Hura-Beersheva</Text>
-          <Text style={styles.description}>
-            I am a tiling specialist with 5 years of experience
-          </Text>
-        </View>
-      </View>
       <ScrollView style={styles.postsContainer}>
         {posts.map((post) => (
           <View style={styles.post} key={post.id}>
