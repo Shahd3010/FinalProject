@@ -14,7 +14,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { theme } from "../../../../src/infrastructure/theme";
 import ChatProfiles from "./ChatProfiles";
 import { WorkScreen } from "./works.screen";
-import { PostsScreen } from "./PostsScreen";
 import ScreenPosts from "./ScreenPosts";
 
 const Stack = createStackNavigator();

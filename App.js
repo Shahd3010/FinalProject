@@ -13,7 +13,7 @@ import SignUpType from "./src/features/works/screens/SignUpType";
 import HomeScreenWorker from "./src/features/works/screens/HomeScreenWorker";
 import SettingsScreen from "./src/features/works/screens/SettingsScreen";
 import PostCard from "./src/features/works/screens/PostCard";
-import PostsScreen from "./src/features/works/screens/PostsScreen";
+
 import ProfileShow from "./src/features/works/screens/ProfileShow.js";
 import WorkerProfileScreen from "./src/features/works/screens/WorkerProfileScreen.js";
 import ScreenPosts from "./src/features/works/screens/ScreenPosts.js";

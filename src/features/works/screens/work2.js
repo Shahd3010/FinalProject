@@ -51,8 +51,25 @@ const Worker2 = ({ route }) => {
       }
     };
 
+    const fetchUserPosts = async () => {
+      try {
+        const firestore = getFirestore();
+        const postsCollection = collection(firestore, "posts");
+        const q = query(postsCollection, where("publisherId", "==", userId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const fetchedPosts = querySnapshot.docs.map((doc) => doc.data());
+          setPosts(fetchedPosts);
+        }
+      } catch (error) {
+        console.log("Error fetching user posts:", error);
+      }
+    };
+
     fetchUserData();
-  }, [email]);
+    fetchUserPosts();
+  }, [email, userId]);
   const handleAddPost = async () => {
     // Create the new post object
     const newPost = {
