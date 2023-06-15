@@ -32,7 +32,7 @@ function SettingsStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="Settings"
-        component={Settings}
+        component={Chat}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

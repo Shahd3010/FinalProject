@@ -45,13 +45,14 @@ const ChatStackScreen = () => {
   );
 };
 
-const SettingsStackScreen = ({ user }) => {
+const SettingsStackScreen = ({ route }) => {
+  const { email } = route.params.user;
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="Settings"
         component={Settings}
-        initialParams={{ user: user }}
+        initialParams={{ email }}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>

@@ -118,6 +118,7 @@ export default function SignUpWorker() {
               placeholder="מייל"
               keyboardType="email-address"
               value={email}
+              autoCapitalize="none"
               onChangeText={(text) => setEmail(text)}
             />
             <GooglePlacesAutocomplete
