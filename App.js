@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import firebaseConfig from "./firebaseConfig.js";
-
+import GooglePlacesInput from "./src/features/works/screens/goo.js";
 //import Chat from "./src/features/works/screens/Chat";
 //import { SettingsScreen } from "./src/features/works/screens/setting.screen";
 import Login from "./src/features/works/screens/Login";
@@ -13,6 +13,7 @@ import SignUpType from "./src/features/works/screens/SignUpType";
 import HomeScreenWorker from "./src/features/works/screens/HomeScreenWorker";
 import SettingsScreen from "./src/features/works/screens/SettingsScreen";
 import PostCard from "./src/features/works/screens/PostCard";
+import ChoiceScreen from "./src/features/works/screens/ChoiceScreen.js";
 
 import ProfileShow from "./src/features/works/screens/ProfileShow.js";
 import WorkerProfileScreen from "./src/features/works/screens/WorkerProfileScreen.js";
@@ -58,29 +59,31 @@ function App() {
           component={Login}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="SignUpWorker" component={SignUpWorker} />
+        <Stack.Screen
+          name="choices"
+          component={ChoiceScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen name="map" component={GooglePlacesInput} />
+
         <Stack.Screen
           name="HomeScreenWorker"
           component={HomeScreenWorker}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="SignUpType"
           component={SignUpType}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen
-          name="SignUpWorker"
-          component={SignUpWorker}
-          options={{ headerShown: false }}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );

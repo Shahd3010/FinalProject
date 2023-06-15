@@ -6,13 +6,13 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
   Alert,
   Image,
 } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -28,25 +28,7 @@ export default function SignUpWorker() {
   const [photo, setPhoto] = useState(null);
   const navigation = useNavigation();
   const [users, setUsers] = useState([]);
-  const handlePlaceChange = async (place) => {
-    const apiKey = "your-api-key-here";
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${apiKey}`;
 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (data.results.length > 0) {
-        const location = data.results[0].geometry.location;
-        console.log(location.lat, location.lng);
-        // do something with location data
-      } else {
-        console.log("No results found");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleSignUp = async () => {
     // Check if all required fields are filled
     if (!name || !email || !place || !phone || !description || !password) {
@@ -64,7 +46,7 @@ export default function SignUpWorker() {
       const user = response.user;
       const firestore = getFirestore();
       if (user) {
-        // Save additional user data to Firestore or Realtime Database
+        // Save additional user data to Firestore
         const newUser = {
           name,
           email,
@@ -92,8 +74,9 @@ export default function SignUpWorker() {
   };
 
   const handleChoicePress = (choice) => {
-    console.log(`You selected: ${choice}`);
+    setChoices([choice]);
   };
+
   const handleSelectPhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -106,132 +89,151 @@ export default function SignUpWorker() {
     }
   };
 
-  return (
-    <ScrollView style={styles.container}>
-      {photo && <Image source={{ uri: photo }} style={styles.photo} />}
-      <TouchableOpacity style={styles.button} onPress={handleSelectPhoto}>
-        <Text style={styles.buttonText}>Select Photo</Text>
-      </TouchableOpacity>
+  const handlePlaceChange = (selectedPlace) => {
+    // Perform operations with the selected place
+    console.log("Selected Place:", selectedPlace);
+    // Save the selected place to the state or database as needed
+    setPlace(selectedPlace);
+  };
 
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={(text) => setName(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Place"
-        value={place}
-        onChangeText={(text) => {
-          setPlace(text);
-          handlePlaceChange(text);
-        }}
-      />
-      <View style={styles.choicesContainer}>
-        <Text style={styles.label}>Choices:</Text>
-        <View style={styles.choices}>
-          {choices.map((choice, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => handleChoicePress(choice)}
-              style={styles.choice}
-            >
-              <Text>{choice}</Text>
+  return (
+    <View style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.contentContainer}
+        ListHeaderComponent={
+          <>
+            {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+            <TouchableOpacity style={styles.button} onPress={handleSelectPhoto}>
+              <Text style={styles.buttonText}>תבחר תמונה</Text>
             </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Phone"
-        keyboardType="phone-pad"
-        value={phone}
-        onChangeText={(text) => setPhone(text)}
+
+            <TextInput
+              style={styles.input}
+              placeholder="שם"
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="מייל"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
+            <GooglePlacesAutocomplete
+              placeholder="מיקום"
+              onPress={(data, details = null) => {
+                // 'details' is provided when fetchDetails = true
+                console.log(data, details);
+                setPlace(data.description);
+                handlePlaceChange(data.description);
+              }}
+              query={{
+                key: "AIzaSyAWiyyQ5aNjGu6RzqE9ni2K5f2G9Ac270Y",
+
+                language: "iw", // Change to the desired language
+              }}
+            />
+            <View style={styles.choicesContainer}>
+              <Text style={styles.label}>Choices:</Text>
+              <View style={styles.choices}>
+                {choices.map((choice, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => handleChoicePress(choice)}
+                    style={styles.choice}
+                  >
+                    <Text style={styles.choiceText}>{choice}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="מספר טלפון"
+              keyboardType="phone-pad"
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="תיאור כללי"
+              multiline={true}
+              numberOfLines={4}
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="סיסמה"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
+          </>
+        }
+        ListFooterComponent={
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+            <Text style={styles.buttonText}>הרשמה</Text>
+          </TouchableOpacity>
+        }
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Description"
-        multiline={true}
-        numberOfLines={4}
-        value={description}
-        onChangeText={(text) => setDescription(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
   },
-  title: {
-    fontSize: 25,
-    fontWeight: "bold",
-    color: "#8b4513",
-    alignSelf: "center",
-    paddingBottom: 24,
+  contentContainer: {
+    flexGrow: 1,
   },
   input: {
-    backgroundColor: "#F6F7FB",
-    height: 58,
-    marginBottom: 20,
+    height: 40,
+    borderColor: "#f57c00",
+    borderWidth: 1,
+    marginBottom: 15, // Increased spacing
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: "#f57c00",
+    padding: 10,
+    marginBottom: 15, // Increased spacing
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
     fontSize: 16,
-    borderRadius: 10,
-    padding: 12,
+  },
+  photo: {
+    width: 200,
+    height: 200,
+    marginBottom: 15,
+    borderRadius: 5,
   },
   choicesContainer: {
-    marginBottom: 10,
+    marginBottom: 15,
   },
   label: {
+    fontWeight: "bold",
     marginBottom: 5,
   },
   choices: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginBottom: 5,
   },
   choice: {
     backgroundColor: "#f57c00",
+    padding: 10,
+    margin: 5,
     borderRadius: 5,
-    padding: 5,
-    marginRight: 5,
-    marginBottom: 5,
   },
-  button: {
-    backgroundColor: "#f57c00",
-    height: 58,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  buttonText: {
+  choiceText: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-    photo: {
-      width: 100,
-      height: 100,
-      borderRadius: 50,
-    },
   },
 });
