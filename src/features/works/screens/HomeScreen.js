@@ -31,11 +31,7 @@ function ChatStack() {
 function SettingsStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Settings"
-        component={Setting}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Settings" component={Setting} />
     </Stack.Navigator>
   );
 }

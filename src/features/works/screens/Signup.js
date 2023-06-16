@@ -32,7 +32,7 @@ export default function Signup() {
           password
         );
         if (response.user) {
-          navigation.navigate("HomeScreen");
+          navigation.navigate("HomeScreen", { user: response.user });
         }
       } catch (error) {
         console.log("Signup error", error);

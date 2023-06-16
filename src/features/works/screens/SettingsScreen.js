@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Switch, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const SettingsScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(false);
@@ -14,8 +15,13 @@ const SettingsScreen = () => {
     setDarkModeEnabled((prevValue) => !prevValue);
   };
 
+  const navigate = useNavigation();
+  const handleChangePassword = () => {
+    // Implement your logic to change the password
+  };
+
   const handleLogout = () => {
-    // Handle logout logic here
+    navigate.navigate("Login");
   };
 
   return (
@@ -28,10 +34,13 @@ const SettingsScreen = () => {
         />
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Dark Mode</Text>
-        <Switch value={darkModeEnabled} onValueChange={handleDarkModeToggle} />
-      </View>
+      <TouchableOpacity
+        style={styles.optionButton}
+        onPress={handleChangePassword}
+      >
+        <Ionicons name="key-outline" size={24} color="#f57c00" />
+        <Text style={styles.optionButtonText}>Change Password</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Logout</Text>
@@ -56,6 +65,16 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  optionButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  optionButtonText: {
+    fontSize: 16,
+    marginLeft: 8,
+    color: "#f57c00",
   },
   logoutButton: {
     flexDirection: "row",

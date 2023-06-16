@@ -14,6 +14,7 @@ const Settings = ({ route }) => {
   const navigation = useNavigation();
   const { email } = route.params;
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigation();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,6 +35,9 @@ const Settings = ({ route }) => {
 
     fetchUserData();
   }, [email]);
+  const handleLogout = () => {
+    navigate.navigate("Login");
+  };
 
   const handleChangePassword = () => {
     navigation.navigate("ChangePasswordScreen", { email });
@@ -52,7 +56,7 @@ const Settings = ({ route }) => {
             <Image style={styles.userPhoto} source={{ uri: userData.photo }} />
             <Text style={styles.userName}>{userData.name}</Text>
           </View>
-          <Text style={styles.title}>Settings</Text>
+
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>My Profile</Text>
             <TouchableOpacity style={styles.option} onPress={handleEditProfile}>
@@ -72,6 +76,14 @@ const Settings = ({ route }) => {
           </View>
         </>
       )}
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Logout</Text>
+        <Ionicons name="log-out-outline" size={24} color="#f57c00" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>DELETE MY ACCOUNT</Text>
+        <Ionicons name="log-out-outline" size={24} color="#f57c00" />
+      </TouchableOpacity>
     </View>
   );
 };

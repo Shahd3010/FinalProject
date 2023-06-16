@@ -13,11 +13,11 @@ export default function Chat() {
     const fetchedMessages = [
       {
         _id: 1,
-        text: "Hellooo!",
+
         createdAt: new Date(),
         user: {
           _id: 2,
-          name: "shahd",
+          name: "majed",
         },
       },
     ];
