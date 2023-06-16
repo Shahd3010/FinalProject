@@ -53,12 +53,10 @@ const ScreenPosts = () => {
 
   const applyFilters = (type) => {
     let filtered = posts;
-
-    if (type) {
-      filtered = filtered.filter((post) => post.type === type);
-    }
-
-    setFilteredPosts(filtered);
+    console.log(posts.type);
+    setFilteredPosts((prev) => prev.filter((post) => post.type === type));
+    console.log(type);
+    console.log(posts.type);
   };
 
   const clearFilters = () => {
