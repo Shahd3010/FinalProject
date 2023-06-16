@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
+import { Linking } from "react-native";
 import {
   getFirestore,
   collection,
@@ -62,6 +62,16 @@ const PostCard = ({ post }) => {
   const handleChatPress = () => {
     navigation.navigate("Chat");
   };
+  const handlePhonePress = () => {
+    // Check if the phone number is available
+    if (publisherPhone) {
+      // Remove any non-digit characters from the phone number
+      const phoneNumber = publisherPhone.replace(/\D/g, "");
+
+      // Make the phone call
+      Linking.openURL(`tel:${phoneNumber}`);
+    }
+  };
 
   const handleImagePress = () => {
     setModalVisible(true);
@@ -109,10 +119,13 @@ const PostCard = ({ post }) => {
                   <Text style={styles.publisherName}>{publisherName}</Text>
                   <View style={styles.publisherDetailsContainer}>
                     <Ionicons name="call-outline" size={18} color="#333" />
-                    <Text style={styles.publisherDetails}>
-                      {publisherPhone}
-                    </Text>
+                    <TouchableWithoutFeedback onPress={handlePhonePress}>
+                      <Text style={styles.publisherDetails}>
+                        {publisherPhone}
+                      </Text>
+                    </TouchableWithoutFeedback>
                   </View>
+
                   <View style={styles.publisherDetailsContainer}>
                     <Ionicons name="location-outline" size={18} color="#333" />
                     <Text style={styles.publisherDetails}>
@@ -190,7 +203,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   publisherName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#333",
   },
