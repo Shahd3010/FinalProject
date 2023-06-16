@@ -96,6 +96,7 @@ const PostCard = ({ post }) => {
             source={{ uri: publisherPhoto }}
           />
         </TouchableOpacity>
+        <Text style={styles.description}>{post.text}</Text>
         <Modal
           visible={profileModalVisible}
           animationType="slide"
@@ -149,8 +150,6 @@ const PostCard = ({ post }) => {
         )}
       </TouchableOpacity>
       <View style={styles.content}>
-        <Text style={styles.name}>{post.rating}</Text>
-        <Text style={styles.description}>{post.text}</Text>
         <TouchableOpacity
           style={styles.messageButton}
           onPress={handleChatPress}

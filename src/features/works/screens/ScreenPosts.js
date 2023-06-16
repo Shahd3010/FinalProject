@@ -37,14 +37,13 @@ const ScreenPosts = () => {
     setShowFilters(!showFilters);
   };
   const handlePlaceChange = (selectedPlace) => {
-    // Perform operations with the selected place
     console.log("Selected Place:", selectedPlace);
-    // Save the selected place to the state or database as needed
+
     setPlace(selectedPlace);
   };
   const handlePlaceFilter = (place) => {
     setSelectedPlace(place);
-    applyFilters(place, selectedRating, selectedType);
+    applyFilters(selectedRating, selectedType);
   };
 
   const handleRatingFilter = (rating) => {
@@ -57,12 +56,8 @@ const ScreenPosts = () => {
     applyFilters(selectedPlace, selectedRating, type);
   };
 
-  const applyFilters = (place, rating, type) => {
+  const applyFilters = (rating, type) => {
     let filtered = posts;
-
-    if (place) {
-      filtered = filtered.filter((post) => post.place === place);
-    }
 
     if (rating) {
       filtered = filtered.filter((post) => post.rating === rating);
@@ -87,9 +82,7 @@ const ScreenPosts = () => {
       <GooglePlacesAutocomplete
         placeholder="Search"
         onPress={(data, details = null) => {
-          // Handle the selected place here
           console.log(data, details);
-          // You can set the selected place and apply filters
           setSelectedPlace(data.description);
           applyFilters(data.description, selectedRating, selectedType);
         }}
@@ -112,39 +105,39 @@ const ScreenPosts = () => {
           <TouchableOpacity
             style={[
               styles.filterButton,
-              selectedRating === "Rating 1" && styles.activeFilter,
+              selectedRating === " 1" && styles.activeFilter,
             ]}
-            onPress={() => handleRatingFilter("Rating 1")}
+            onPress={() => handleRatingFilter("עיצוב פנים")}
           >
-            <Text style={styles.filterButtonText}>Rating 1</Text>
+            <Text style={styles.filterButtonText}> עיצוב פנים</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.filterButton,
-              selectedRating === "Rating 2" && styles.activeFilter,
+              selectedRating === "בנייב" && styles.activeFilter,
             ]}
-            onPress={() => handleRatingFilter("Rating 2")}
+            onPress={() => handleRatingFilter(" בנייה")}
           >
-            <Text style={styles.filterButtonText}>Rating 2</Text>
+            <Text style={styles.filterButtonText}> בנייה</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[
               styles.filterButton,
-              selectedType === "Type 1" && styles.activeFilter,
+              selectedType === "חשמל" && styles.activeFilter,
             ]}
-            onPress={() => handleTypeFilter("Type 1")}
+            onPress={() => handleTypeFilter("חשמל")}
           >
-            <Text style={styles.filterButtonText}>Type 1</Text>
+            <Text style={styles.filterButtonText}>חשמל</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.filterButton,
-              selectedType === "Type 2" && styles.activeFilter,
+              selectedType === "גינון" && styles.activeFilter,
             ]}
-            onPress={() => handleTypeFilter("Type 2")}
+            onPress={() => handleTypeFilter("גינון")}
           >
-            <Text style={styles.filterButtonText}>Type 2</Text>
+            <Text style={styles.filterButtonText}>גינון</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.clearButton} onPress={clearFilters}>
@@ -188,7 +181,7 @@ const styles = StyleSheet.create({
   },
   listView: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#fff",
     borderRadius: 4,
     marginTop: 4,
   },
@@ -204,7 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#f57c00",
     borderRadius: 4,
   },
   activeFilter: {
@@ -217,7 +210,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#999",
     borderRadius: 4,
   },
   clearButtonText: {

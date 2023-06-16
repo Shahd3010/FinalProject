@@ -97,7 +97,7 @@ export default function SignUpWorker() {
   const handlePlaceChange = (selectedPlace) => {
     // Perform operations with the selected place
     console.log("Selected Place:", selectedPlace);
-    // Save the selected place to the state or database as needed
+    // Save the selected place to the state
     setPlace(selectedPlace);
   };
 
@@ -129,7 +129,6 @@ export default function SignUpWorker() {
             <GooglePlacesAutocomplete
               placeholder="מיקום"
               onPress={(data, details = null) => {
-                // 'details' is provided when fetchDetails = true
                 console.log(data, details);
                 setPlace(data.description);
                 handlePlaceChange(data.description);
@@ -137,7 +136,7 @@ export default function SignUpWorker() {
               query={{
                 key: "AIzaSyAWiyyQ5aNjGu6RzqE9ni2K5f2G9Ac270Y",
 
-                language: "iw", // Change to the desired language
+                language: "iw",
               }}
             />
             <View style={styles.choicesContainer}>
