@@ -33,6 +33,7 @@ const Worker2 = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newPostImage, setNewPostImage] = useState(null);
   const [newPostDescription, setNewPostDescription] = useState("");
+  const [userType, setUserType] = useState("");
   const [editingPost, setEditingPost] = useState(null);
   const [editingPostIndex, setEditingPostIndex] = useState(null);
 
@@ -48,6 +49,7 @@ const Worker2 = ({ route }) => {
           const document = querySnapshot.docs[0];
           const userData = document.data();
           setUserData(userData);
+          setUserType(userData.choices);
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
@@ -81,6 +83,7 @@ const Worker2 = ({ route }) => {
       imageUrl: newPostImage,
       rating: 0, // Set initial rating to 0
       text: newPostDescription,
+      type: userType,
     };
 
     try {
