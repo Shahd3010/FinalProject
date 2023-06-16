@@ -6,24 +6,20 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // Simulating fetching chat messages from an API or storage
     fetchMessages();
   }, []);
 
   const fetchMessages = () => {
-    // Simulating an API call or storage retrieval for chat messages
-    // Replace this with your own logic to fetch messages
     const fetchedMessages = [
       {
         _id: 1,
-        text: "Hello!",
+        text: "Hellooo!",
         createdAt: new Date(),
         user: {
           _id: 2,
-          name: "John",
+          name: "shahd",
         },
       },
-      // Add more messages here
     ];
 
     setMessages(fetchedMessages);
@@ -32,13 +28,10 @@ export default function Chat() {
   const onSend = (newMessages = []) => {
     setMessages((prevMessages) => GiftedChat.append(prevMessages, newMessages));
 
-    // Simulating sending the message to an API or storage
     sendMessage(newMessages[0]);
   };
 
   const sendMessage = (message) => {
-    // Simulating an API call or storage update to send the message
-    // Replace this with your own logic to send the message
     console.log("Message sent:", message);
   };
 

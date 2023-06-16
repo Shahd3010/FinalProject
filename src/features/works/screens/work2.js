@@ -33,6 +33,8 @@ const Worker2 = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newPostImage, setNewPostImage] = useState(null);
   const [newPostDescription, setNewPostDescription] = useState("");
+  const [editingPost, setEditingPost] = useState(null);
+  const [editingPostIndex, setEditingPostIndex] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -103,6 +105,13 @@ const Worker2 = ({ route }) => {
       console.log("Error adding post:", error);
     }
   };
+  const handleEditPost = (post, index) => {
+    setModalVisible(true);
+    setNewPostImage(post.imageUrl);
+    setNewPostDescription(post.text);
+    setEditingPost(post);
+    setEditingPostIndex(index);
+  };
   const handleChoosePhoto = async () => {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -158,27 +167,28 @@ const Worker2 = ({ route }) => {
                 <MaterialIcons name="location-on" size={24} color="#2F80ED" />
                 <Text style={styles.place}>{userData.place}</Text>
               </View>
+              <View style={styles.placeContainer}>
+                <MaterialIcons
+                  name="phone"
+                  size={24}
+                  color="#2F80ED"
+                  style={styles.phoneIcon}
+                />
+                <Text style={styles.info}>{userData.phone}</Text>
+              </View>
+              <View style={styles.placeContainer}>
+                <MaterialIcons
+                  name="description"
+                  size={24}
+                  color="#2F80ED"
+                  style={styles.descriptionIcon}
+                />
+                <Text style={styles.info}>{userData.description}</Text>
+              </View>
             </View>
           </View>
 
-          <View style={styles.detailsContainer}>
-            <View style={styles.infoContainer}>
-              <MaterialIcons
-                name="phone"
-                size={24}
-                color="#2F80ED"
-                style={styles.phoneIcon}
-              />
-              <Text style={styles.info}>{userData.phone}</Text>
-              <MaterialIcons
-                name="description"
-                size={24}
-                color="#2F80ED"
-                style={styles.descriptionIcon}
-              />
-              <Text style={styles.info}>{userData.description}</Text>
-            </View>
-          </View>
+          <View style={styles.detailsContainer}></View>
         </>
       )}
       <ScrollView style={styles.postsContainer}>
@@ -193,6 +203,12 @@ const Worker2 = ({ route }) => {
               <Text style={styles.postText}>{post.text}</Text>
               <TouchableOpacity onPress={() => handleDeletePost(post.id)}>
                 <Ionicons name="trash" size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => handleEditPost(post, post.id)}
+              >
+                <Text style={styles.editButtonText}>Edit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -279,6 +295,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  editButtonText: { flex: 1, fontSize: 18, marginLeft: 8, lineHeight: 24 },
 
   postText: {
     flex: 1,
@@ -385,6 +402,7 @@ const styles = StyleSheet.create({
   },
   descriptionIcon: {
     marginRight: 8,
+    marginTop: 8,
   },
   info: {
     fontSize: 18,

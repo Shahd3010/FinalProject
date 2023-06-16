@@ -46,7 +46,6 @@ const Settings = ({ route }) => {
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 50 }}>
-      <Text> shahd</Text>
       {userData && (
         <>
           <View style={styles.userInfoContainer}>
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
