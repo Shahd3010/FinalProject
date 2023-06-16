@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useNavigation } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {
@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
 
 const Settings = ({ route }) => {
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ const Settings = ({ route }) => {
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
-          const userData = querySnapshot.docs[0].data;
+          const userData = querySnapshot.docs[0].data();
           setUserData(userData);
         }
       } catch (error) {
@@ -45,6 +46,7 @@ const Settings = ({ route }) => {
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 50 }}>
+      <Text> shahd</Text>
       {userData && (
         <>
           <View style={styles.userInfoContainer}>
@@ -69,7 +71,6 @@ const Settings = ({ route }) => {
               <Ionicons name="chevron-forward" size={24} color="#BDBDBD" />
             </TouchableOpacity>
           </View>
-          {/* Add other settings components or functionality as needed */}
         </>
       )}
     </View>

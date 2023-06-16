@@ -23,6 +23,7 @@ import { MaterialIcons } from "react-native-vector-icons";
 import { addDoc, doc, deleteDoc } from "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
 import { ref } from "firebase/storage";
+import { isSignInWithEmailLink } from "firebase/auth";
 const Worker2 = ({ route }) => {
   const { user } = route.params;
   const email = user.email;
@@ -55,7 +56,7 @@ const Worker2 = ({ route }) => {
       try {
         const firestore = getFirestore();
         const postsCollection = collection(firestore, "posts");
-        const q = query(postsCollection, where("publisherId", "==", userId));
+        const q = query(postsCollection, where("publisherId", "==", email));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
@@ -87,7 +88,7 @@ const Worker2 = ({ route }) => {
       const postsCollection = collection(firestore, "posts");
       // Add the new post to Firestore
       const docRef = await addDoc(postsCollection, newPost);
-      const [newPostRating, setNewPostRating] = useState(0);
+
       // Update the new post object with the generated post ID
       newPost.id = docRef.id;
 
