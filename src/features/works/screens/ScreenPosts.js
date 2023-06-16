@@ -7,8 +7,10 @@ import {
   Text,
   Modal,
 } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import PostCard from "./PostCard";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const ScreenPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -17,6 +19,7 @@ const ScreenPosts = () => {
   const [selectedPlace, setSelectedPlace] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [place, setPlace] = useState(null);
 
   useEffect(() => {
     const firestore = getFirestore();
@@ -33,7 +36,12 @@ const ScreenPosts = () => {
   const handleFilterPress = () => {
     setShowFilters(!showFilters);
   };
-
+  const handlePlaceChange = (selectedPlace) => {
+    // Perform operations with the selected place
+    console.log("Selected Place:", selectedPlace);
+    // Save the selected place to the state or database as needed
+    setPlace(selectedPlace);
+  };
   const handlePlaceFilter = (place) => {
     setSelectedPlace(place);
     applyFilters(place, selectedRating, selectedType);
@@ -76,31 +84,31 @@ const ScreenPosts = () => {
 
   return (
     <View style={styles.container}>
+      <GooglePlacesAutocomplete
+        placeholder="Search"
+        onPress={(data, details = null) => {
+          // Handle the selected place here
+          console.log(data, details);
+          // You can set the selected place and apply filters
+          setSelectedPlace(data.description);
+          applyFilters(data.description, selectedRating, selectedType);
+        }}
+        query={{
+          key: "AIzaSyAWiyyQ5aNjGu6RzqE9ni2K5f2G9Ac270Y",
+          language: "iw",
+        }}
+        styles={{
+          textInput: styles.searchTextInput,
+          container: styles.searchContainer,
+          listView: styles.listView,
+        }}
+      />
       <TouchableOpacity onPress={handleFilterPress}>
-        <Text style={styles.filterIcon}>Filter</Text>
+        <Icon name="filter-list" size={24} style={styles.filterIcon} />
       </TouchableOpacity>
 
       {showFilters && (
         <View style={styles.filtersContainer}>
-          <TouchableOpacity
-            style={[
-              styles.filterButton,
-              selectedPlace === "Place 1" && styles.activeFilter,
-            ]}
-            onPress={() => handlePlaceFilter("Place 1")}
-          >
-            <Text style={styles.filterButtonText}>Place 1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.filterButton,
-              selectedPlace === "Place 2" && styles.activeFilter,
-            ]}
-            onPress={() => handlePlaceFilter("Place 2")}
-          >
-            <Text style={styles.filterButtonText}>Place 2</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity
             style={[
               styles.filterButton,
@@ -162,9 +170,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   filterIcon: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 50, // Adjust the size of the icon
+    color: "#999",
+    marginRight: 10,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
+  },
+  searchTextInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    height: 40,
+    paddingHorizontal: 12,
+  },
+  listView: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    marginTop: 4,
   },
   filtersContainer: {
     flexDirection: "row",
@@ -176,6 +202,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     marginRight: 10,
     marginBottom: 10,
+    marginTop: 10,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
