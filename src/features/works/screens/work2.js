@@ -74,9 +74,9 @@ const Worker2 = ({ route }) => {
     // Create the new post object
     const newPost = {
       id: posts.length + 1,
-      publisherId: userId, // Check if user exists and has an ID
+      publisherId: email, // Check if user exists and has an ID
       imageUrl: newPostImage,
-      rating: 3,
+      rating: 0, // Set initial rating to 0
       text: newPostDescription,
     };
 
@@ -87,7 +87,7 @@ const Worker2 = ({ route }) => {
       const postsCollection = collection(firestore, "posts");
       // Add the new post to Firestore
       const docRef = await addDoc(postsCollection, newPost);
-
+      const [newPostRating, setNewPostRating] = useState(0);
       // Update the new post object with the generated post ID
       newPost.id = docRef.id;
 

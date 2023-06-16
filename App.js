@@ -28,6 +28,7 @@ import SignUpWorker from "./src/features/works/screens/SignUpWorker";
 import Settings from "./src/features/works/screens/Settings";
 import { listenToAuthState } from "./firebaseConfig.js";
 const Stack = createStackNavigator();
+import PublisherProfile from "./src/features/works/screens/PublisherProfile.js";
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -78,6 +79,7 @@ function App() {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="profiles" component={PublisherProfile} />
         <Stack.Screen
           name="SignUpType"
           component={SignUpType}

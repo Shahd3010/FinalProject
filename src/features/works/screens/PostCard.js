@@ -1,19 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   Image,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Modal,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import Chat from "./Chat";
 
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 const PostCard = ({ post }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [profileModalVisible, setProfileModalVisible] = useState(false);
+  const [postModalVisible, setPostModalVisible] = useState(false);
+  const [publisherPhoto, setPublisherPhoto] = useState(null);
+  const [publisherName, setPublisherName] = useState("");
+  const [publisherType, setPublisherType] = useState("");
+  const [publisherPlace, setPublisherPlace] = useState("");
+  const [publisherDes, setPublisherDes] = useState("");
+  const [publisherPhone, setPublisherPhone] = useState("");
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchPublisherPhoto = async () => {
+      if (post.publisherId) {
+        const firestore = getFirestore();
+        const usersCollection = collection(firestore, "users");
+        const q = query(
+          usersCollection,
+          where("email", "==", post.publisherId)
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          console.log("User Data:", userData);
+          setPublisherPhoto(userData.photo);
+          setPublisherName(userData.name);
+          setPublisherType(userData.choices);
+          setPublisherDes(userData.description);
+          setPublisherPlace(userData.place);
+          setPublisherPhone(userData.phone);
+        }
+      }
+    };
+
+    fetchPublisherPhoto();
+  }, [post.publisherid]);
+
   const handleChatPress = () => {
     navigation.navigate("Chat");
   };
@@ -25,9 +70,62 @@ const PostCard = ({ post }) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  const closeProfileModal = () => {
+    setProfileModalVisible(false);
+  };
 
+  const closePostModal = () => {
+    setPostModalVisible(false);
+  };
   return (
     <View style={styles.card}>
+      <View style={styles.publisherContainer}>
+        <TouchableOpacity onPress={() => setProfileModalVisible(true)}>
+          <Image
+            style={styles.publisherPhoto}
+            source={{ uri: publisherPhoto }}
+          />
+        </TouchableOpacity>
+        <Modal
+          visible={profileModalVisible}
+          animationType="slide"
+          onRequestClose={closeProfileModal}
+        >
+          <ScrollView>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={closeProfileModal}
+              >
+                <Ionicons name="close-circle" size={32} color="#f57c00" />
+              </TouchableOpacity>
+
+              <View style={styles.publisherInfoContainer}>
+                <Image
+                  style={styles.publisherPhoto}
+                  source={{ uri: publisherPhoto }}
+                />
+                <View style={styles.publisherInfo}>
+                  <Text style={styles.publisherName}>{publisherName}</Text>
+                  <View style={styles.publisherDetailsContainer}>
+                    <Ionicons name="call-outline" size={18} color="#333" />
+                    <Text style={styles.publisherDetails}>
+                      {publisherPhone}
+                    </Text>
+                  </View>
+                  <View style={styles.publisherDetailsContainer}>
+                    <Ionicons name="location-outline" size={18} color="#333" />
+                    <Text style={styles.publisherDetails}>
+                      {publisherPlace}
+                    </Text>
+                  </View>
+                  <Text style={styles.publisherType}>{publisherType}</Text>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+        </Modal>
+      </View>
       <TouchableOpacity onPress={handleImagePress}>
         {post.imageUrl ? (
           <View style={styles.imageContainer}>
@@ -38,7 +136,7 @@ const PostCard = ({ post }) => {
         )}
       </TouchableOpacity>
       <View style={styles.content}>
-        <Text style={styles.name}>{post.id}</Text>
+        <Text style={styles.name}>{post.rating}</Text>
         <Text style={styles.description}>{post.text}</Text>
         <TouchableOpacity
           style={styles.messageButton}
@@ -69,46 +167,89 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 12,
     overflow: "hidden",
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  publisherInfoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  modalContent: {
+    flex: 1,
+    padding: 16,
+  },
+  publisherInfo: {
+    marginLeft: 8,
+  },
+  publisherName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  publisherDetailsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 4,
+  },
+  publisherDetails: {
+    marginLeft: 4,
+    color: "#666",
+  },
+  publisherType: {
+    fontSize: 16,
+    color: "#666",
+    marginTop: 8,
   },
   imageContainer: {
     width: "100%",
-    height: 200,
-    backgroundColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "center",
+    aspectRatio: 1,
   },
   image: {
-    width: "80%",
-    height: "80%",
+    width: "100%",
+    height: "100%",
     resizeMode: "cover",
   },
   placeholderImage: {
     width: "100%",
-    height: 200,
+    aspectRatio: 1,
     backgroundColor: "#ccc",
   },
   content: {
     padding: 16,
   },
   name: {
-    fontSize: 50,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#666",
-    textAlign: "center",
+    color: "#333",
   },
   description: {
-    fontSize: 14,
+    fontSize: 18,
     color: "#666",
-    marginBottom: 8,
-    backgroundColor: "#f57c00",
-    textAlign: "center",
+    marginBottom: 6,
   },
   messageButton: {
     backgroundColor: "#f57c00",
     borderRadius: 20,
-    padding: 9,
-    alignSelf: "flex-end",
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    alignSelf: "flex-start",
+    marginTop: 8,
+  },
+  publisherPhoto: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 3,
+    borderColor: "#fff",
   },
   modalContainer: {
     flex: 1,

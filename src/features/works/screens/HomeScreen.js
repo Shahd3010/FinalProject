@@ -78,7 +78,12 @@ function RootNavigator() {
 
 const Tab = createBottomTabNavigator();
 
-export default function HomeScreen() {
+export default function HomeScreen({ route }) {
+  const { user } = route.params;
+  console.log("User:", user);
+  const userId = user.uid;
+  const email = user.email;
+
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
   });

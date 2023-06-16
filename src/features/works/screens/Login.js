@@ -57,7 +57,7 @@ export default function Login() {
           }
         } else {
           console.log("User is not a worker");
-          navigation.navigate("HomeScreen");
+          navigation.navigate("HomeScreen", { user: response.user });
         }
       }
     } catch (error) {
