@@ -43,25 +43,16 @@ const ScreenPosts = () => {
   };
   const handlePlaceFilter = (place) => {
     setSelectedPlace(place);
-    applyFilters(selectedRating, selectedType);
-  };
-
-  const handleRatingFilter = (rating) => {
-    setSelectedRating(rating);
-    applyFilters(selectedPlace, rating, selectedType);
+    applyFilters(selectedType);
   };
 
   const handleTypeFilter = (type) => {
     setSelectedType(type);
-    applyFilters(selectedPlace, selectedRating, type);
+    applyFilters(type);
   };
 
-  const applyFilters = (rating, type) => {
+  const applyFilters = (type) => {
     let filtered = posts;
-
-    if (rating) {
-      filtered = filtered.filter((post) => post.rating === rating);
-    }
 
     if (type) {
       filtered = filtered.filter((post) => post.type === type);
@@ -84,7 +75,6 @@ const ScreenPosts = () => {
         onPress={(data, details = null) => {
           console.log(data, details);
           setSelectedPlace(data.description);
-          applyFilters(data.description, selectedRating, selectedType);
         }}
         query={{
           key: "AIzaSyAWiyyQ5aNjGu6RzqE9ni2K5f2G9Ac270Y",
@@ -107,7 +97,7 @@ const ScreenPosts = () => {
               styles.filterButton,
               selectedRating === " 1" && styles.activeFilter,
             ]}
-            onPress={() => handleRatingFilter("עיצוב פנים")}
+            onPress={() => handleTypeFilter("עיצוב פנים")}
           >
             <Text style={styles.filterButtonText}> עיצוב פנים</Text>
           </TouchableOpacity>
@@ -116,7 +106,7 @@ const ScreenPosts = () => {
               styles.filterButton,
               selectedRating === "בנייב" && styles.activeFilter,
             ]}
-            onPress={() => handleRatingFilter(" בנייה")}
+            onPress={() => handleTypeFilter(" בנייה")}
           >
             <Text style={styles.filterButtonText}> בנייה</Text>
           </TouchableOpacity>
