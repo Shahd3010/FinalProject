@@ -21,7 +21,12 @@ export default function SignUpWorker() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [place, setPlace] = useState(null);
-  const [choices, setChoices] = useState(["בנייה", "שיפוצים", "שטיחים", "נוף"]);
+  const [choices, setChoices] = useState([
+    "בנייה",
+    "עיצוב פנים",
+    "חשמל",
+    "גינון",
+  ]);
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");

@@ -20,6 +20,7 @@ const Stack = createStackNavigator();
 import Chat from "./Chat";
 import Settings from "./Settings";
 import Login from "./Login";
+import Setting from "./SettingsScreen";
 function ChatStack() {
   return (
     <Stack.Navigator>
@@ -32,7 +33,7 @@ function SettingsStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="Settings"
-        component={Chat}
+        component={Setting}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
